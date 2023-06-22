@@ -21,7 +21,10 @@ from attendance import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', views.home),
-    path('join', views.join),
-    path('login', views.login),
-    path('logout', views.logout),
+    path('start/', views.start, name='start'),
+    path('signup/', views.user_signup, name='user_signup'),
+    path('admin/signup/', views.admin_signup, name='admin_signup'),
+    path('login/', views.user_login, name='user_login'),
+    path('admin/login/', views.admin_login, name='admin_login'),
+    path('logout/', views.logout),
 ]

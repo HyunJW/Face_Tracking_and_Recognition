@@ -1,53 +1,77 @@
 from django.shortcuts import render, redirect
-from attendance.models import User
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from .forms import CustomUserCreationForm, CustomAdminUserCreationForm
 import hashlib
 
 
 def home(request):
-    if 'userid' not in request.session.keys():
-        return render(request, 'attendance/login.html')
+    if not request.user.is_authenticated:
+        return redirect('start')
+    elif request.user.is_staff:
+        return render(request, 'attendance/admin.html')
     else:
         return render(request, 'attendance/main.html')
 
 
-def login(request):
+def start(request):
+    return render(request, 'attendance/start.html')
+
+
+def user_login(request):
     if request.method == 'POST':
-        user_id = request.POST['user_id']
+        username = request.POST['username']
         password = request.POST['password']
         password = hashlib.sha256(password.encode()).hexdigest()
-        row = User.objects.filter(user_id=user_id, password=password)[0]
-        if row is not None:
-            request.session['user_id'] = user_id
-            request.session['first_name'] = row.first_name
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None and not user.is_staff:
+            auth_login(request, user)
             return render(request, 'attendance/main.html')
         else:
-            return render(request, 'attendance/login.html', {'msg': '아이디 또는 비밀번호가 일치하지 않습니다.'})
+            return render(request, 'attendance/user_login.html', {'msg': '아이디 또는 비밀번호가 일치하지 않습니다.'})
     else:
-        return render(request, 'attendance/login.html')
+        return render(request, 'attendance/user_login.html')
 
 
-def join(request):
+def admin_login(request):
     if request.method == 'POST':
-        user_id = request.POST['user_id']
+        username = request.POST['username']
         password = request.POST['password']
         password = hashlib.sha256(password.encode()).hexdigest()
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        age = request.POST['age']
-        gender = request.POST['gender']
-        email = request.POST['email']
-        phone_number = request.POST['phone_number']
-        address = request.POST['address']
-        profile_picture = request.POST['profile_picture']
-        User(user_id=user_id, password=password, first_name=first_name, last_name=last_name, age=age, gender=gender,
-             email=email, phone_number=phone_number, address=address, profile_picture=profile_picture).save()
-        request.session['user_id'] = user_id
-        request.session['first_name'] = first_name
-        return render(request, 'attendance/main.html')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None and user.is_staff:
+            auth_login(request, user)
+            return render(request, 'attendance/admin.html')
+        else:
+            return render(request, 'attendance/admin_login.html',
+                          {'msg': '아이디 또는 비밀번호가 일치하지 않거나 권한이 없습니다.'})
     else:
-        return render(request, 'attendance/join.html')
+        return render(request, 'attendance/admin_login.html')
+
+
+def user_signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('user_login')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'user_signup.html', {'form': form})
+
+
+def admin_signup(request):
+    if request.method == 'POST':
+        form = CustomAdminUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_login')
+    else:
+        form = CustomAdminUserCreationForm()
+    return render(request, 'admin_signup.html', {'form': form})
 
 
 def logout(request):
-    request.session.clear()
-    return redirect('/attendance')
+    auth_logout(request)
+    return redirect('/')

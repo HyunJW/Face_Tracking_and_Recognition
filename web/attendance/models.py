@@ -4,6 +4,7 @@ from django.db import models
 
 class User(AbstractUser):
     user_id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=150, unique=True)
     age = models.PositiveIntegerField()
     gender = models.CharField(max_length=10)
     address = models.CharField(max_length=255)
