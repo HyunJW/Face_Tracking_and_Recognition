@@ -1,26 +1,44 @@
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
+class AttendanceUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('이메일을 입력하세요')
 
-class User(AbstractUser):
-    user_id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=150, unique=True)
-    age = models.PositiveIntegerField()
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        return self.create_user(email, password, **extra_fields)
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(unique=True)
+    age = models.IntegerField()
     gender = models.CharField(max_length=10)
-    address = models.CharField(max_length=255)
+    address = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=20)
-    profile_picture = profile_picture = models.ImageField()
-    groups = models.ManyToManyField(Group, related_name='user_attendance', blank=True, db_table='user_groups')
-    user_permissions = models.ManyToManyField(Permission, related_name='user_attendance', blank=True,
-                                              db_table='user_user_permissions')
+    profile_picture = models.ImageField(upload_to='profile_pictures')
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        db_table = 'attendance_user'
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['age', 'gender', 'address', 'phone_number', 'profile_picture']
+
+    objects = AttendanceUserManager()
 
 
 class AttendanceDaily(models.Model):
     index = models.AutoField(primary_key=True)
-    user_profile = models.ForeignKey(User, on_delete=models.CASCADE, related_name='daily_attendances')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='daily_attendances')
     timestamp = models.DateTimeField()
     is_entering = models.BooleanField(default=False)
     remark = models.CharField(max_length=20, blank=True)
@@ -32,7 +50,7 @@ class AttendanceDaily(models.Model):
 class AttendanceOverall(models.Model):
     overall_index = models.AutoField(primary_key=True)
     daily_index = models.IntegerField(unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='overall_attendances')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='overall_attendances')
     timestamp = models.DateTimeField()
     is_entering = models.BooleanField(default=False)
     remark = models.CharField(max_length=20, blank=True)

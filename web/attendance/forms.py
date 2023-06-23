@@ -1,18 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
-class CustomUserCreationForm(UserCreationForm):
-    is_staff = forms.BooleanField(required=False)
-
+class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'first_name', 'last_name', 'age', 'gender', 'email',
-                  'phone_number', 'address', 'profile_picture')
-
-
-class CustomAdminUserCreationForm(CustomUserCreationForm):
-
-    class Meta(CustomUserCreationForm.Meta):
-        fields = CustomUserCreationForm.Meta.fields + ('is_staff',)
+        fields = ['email', 'password1', 'password2', 'age', 'gender', 'address', 'phone_number', 'profile_picture']
