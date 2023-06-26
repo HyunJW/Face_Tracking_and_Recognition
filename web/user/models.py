@@ -1,7 +1,7 @@
 from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin, UserManager
 )
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
 from django.db import models
@@ -9,8 +9,13 @@ from django.utils import timezone
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField('email', unique=True)
+    email = models.EmailField('이메일', unique=True)
     name = models.CharField('이름', max_length=30, blank=True)
+    age = models.IntegerField('나이')
+    gender = models.CharField('성별', max_length=10)
+    address = models.CharField('주소', max_length=100)
+    phone_number = models.CharField('전화번호', max_length=20)
+    profile_picture = models.ImageField('프로필 사진', upload_to='profile_pictures')
     is_staff = models.BooleanField('스태프 권한', default=False)
     is_active = models.BooleanField('사용중', default=True)
     date_joined = models.DateTimeField('가입일', default=timezone.now)
@@ -18,7 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'  # email을 사용자의 식별자로 설정
-    REQUIRED_FIELDS = ['name']  # 필수입력값
+    REQUIRED_FIELDS = ['name', 'age', 'gender', 'address', 'phone_number', 'profile_picture']  # 필수입력값
 
     class Meta:
         verbose_name = _('user')
