@@ -2,17 +2,22 @@ from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin, UserManager
 )
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.base_user import BaseUserManager
 from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
+import re
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    GENDERS = (
+        ('M', '남성'),
+        ('W', '여성'),
+    )
     email = models.EmailField('이메일', unique=True)
-    name = models.CharField('이름', max_length=30, blank=True)
-    age = models.IntegerField('나이')
-    gender = models.CharField('성별', max_length=10)
+    name = models.CharField('이름', max_length=30)
+    birthdate = models.DateField('생년월일')
+    gender = models.CharField('성별', max_length=10, choices=GENDERS)
     address = models.CharField('주소', max_length=100)
     phone_number = models.CharField('전화번호', max_length=20)
     profile_picture = models.ImageField('프로필 사진', upload_to='profile_pictures')
@@ -23,7 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'  # email을 사용자의 식별자로 설정
-    REQUIRED_FIELDS = ['name', 'age', 'gender', 'address', 'phone_number', 'profile_picture']  # 필수입력값
+    REQUIRED_FIELDS = ['name', 'birthdate', 'gender', 'address', 'phone_number', 'profile_picture']  # 필수입력값
 
     class Meta:
         verbose_name = _('user')
@@ -32,6 +37,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def email_user(self, subject, message, from_email=None, **kwargs):  # 이메일 발송 메소드
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+    def invalid_phone(self, phone):
+        if re.match(r"^\d{3}-\d{4}-\d{4}$", phone):
+            return False
+        return True
 
 
 class UserManager(BaseUserManager):

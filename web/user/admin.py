@@ -4,7 +4,7 @@ from attendance.models import User
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email', 'name', 'age', 'gender', 'phone_number', 'address', 'profile_picture',
+    list_display = ('id', 'email', 'name', 'birthdate', 'gender', 'phone_number', 'address', 'profile_picture',
                     'joined_at', 'last_login_at', 'is_superuser', 'is_active')
     list_display_links = ('id', 'email')
     exclude = ('password',)

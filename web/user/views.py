@@ -17,10 +17,6 @@ def home(request):
         return render(request, 'user/main.html')
 
 
-def start(request):
-    return render(request, 'user/start.html')
-
-
 class UserRegistrationView(CreateView):
     model = User
     form_class = UserRegistrationForm
