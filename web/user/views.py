@@ -30,12 +30,3 @@ class UserLoginView(LoginView):
     def form_invalid(self, form):
         messages.error(self.request, '로그인에 실패하였습니다.', extra_tags='danger')
         return super().form_invalid(form)
-
-
-# class AdminLoginView(LoginView):
-#     authentication_form = LoginForm
-#     template_name = 'user/login_form.html'
-#
-#     def form_invalid(self, form):
-#         messages.error(self.request, '로그인에 실패하였습니다.', extra_tags='danger')
-#         return super().form_invalid(form)
