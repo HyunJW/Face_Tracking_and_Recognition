@@ -21,3 +21,7 @@ class UserLoginView(LoginView):
     def form_invalid(self, form):
         messages.error(self.request, '로그인에 실패하였습니다.', extra_tags='danger')
         return super().form_invalid(form)
+
+
+def user_info(request):
+    return render(request, 'user/info.html')
