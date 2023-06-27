@@ -4,10 +4,37 @@
 
 {% block css %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+{% load static %}
+{% static "" as baseUrl %}
+<link rel="stylesheet" href="{{baseUrl}}test.css" type="text/css">
+
 {% endblock css %}
+
+
+
 
 {% block content %}
 <!--view: {{ view }}-->
+
+<div class="container">
+    <div class="row" style="text-align: center;">
+        <div class="col-lg-6" style="background-color: green;">
+            <table>
+                <tr>
+                    <td>출석</td>
+                    <td>ㅇ</td>
+                    <td>퇴실</td>
+                    <td>ㅇ</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-6" style="background-color: skyblue;">
+            <h2>Content2</h2>
+            <p>bbbb</p>
+        </div>
+    </div>
+</div>
 <!--<br>-->
 <!--data: {{ data }}-->
 {% endblock content %}
