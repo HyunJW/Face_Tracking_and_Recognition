@@ -6,10 +6,12 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
+
 import re
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+
     GENDERS = (
         ('M', '남성'),
         ('W', '여성'),
