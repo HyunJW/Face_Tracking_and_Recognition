@@ -8,14 +8,6 @@ from django.contrib import messages
 User = get_user_model()
 
 
-def start():
-    return redirect(home)
-
-
-def home(request):
-    return render(request, 'user/home.html')
-
-
 class UserRegistrationView(CreateView):
     model = User
     form_class = UserRegistrationForm
