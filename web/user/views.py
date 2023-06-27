@@ -8,19 +8,18 @@ from django.contrib import messages
 User = get_user_model()
 
 
+def start():
+    return redirect(home)
+
+
 def home(request):
-    if not request.user.is_authenticated:
-        return redirect('start')
-    elif request.user.is_staff:
-        return render(request, 'user/admin.html')
-    else:
-        return render(request, 'user/main.html')
+    return render(request, 'user/home.html')
 
 
 class UserRegistrationView(CreateView):
     model = User
     form_class = UserRegistrationForm
-    success_url = '/attendance/'
+    success_url = '/home/'
 
 
 class UserLoginView(LoginView):

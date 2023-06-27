@@ -122,11 +122,11 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'user.User'
 
-LOGIN_REDIRECT_URL = '/attendance/'
+LOGIN_REDIRECT_URL = '/home/'
 
 LOGIN_URL = '/user/login/'
 
-LOGOUT_REDIRECT_URL = '/attendance/'
+LOGOUT_REDIRECT_URL = '/home/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
