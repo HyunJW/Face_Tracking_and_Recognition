@@ -2,11 +2,22 @@
 
 {% block title %}<title>출석관리</title>{% endblock title %}
 
+{% block meta %}
+<meta name="viewport" content="width-device-width, initial-scale=1.0">
+{% endblock meta %}
+
 {% block css %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
 {% load static %}
 {% static "" as baseUrl %}
-<link rel="stylesheet" href="{{baseUrl}}css/test.css" type="text/css">
+<link rel="stylesheet" href="{{baseUrl}}css/attendance.css" type="text/css">
+<link rel="stylesheet" href="{{baseUrl}}css/calender.css" type="text/css">
 {% endblock css %}
+
+
+
 
 {% block content %}
 <!--view: {{ view }}-->
@@ -100,12 +111,52 @@
             </div>
         </div>
         <!--    right area    -->
-        <div class="col-sm-6" style="background-color: skyblue;">
-            <h2>Content2</h2>
-            <p>bbbb</p>
+        <div class="col-sm-6">
+            <div class="wrapper">
+                <header>
+                  <p class="current-date"></p>
+                  <div class="icons">
+                    <span id="prev" class="material-symbols-rounded">chevron_left</span>
+                    <span id="next" class="material-symbols-rounded">chevron_right</span>
+                  </div>
+                </header>
+                <div class="calender">
+                    <ul class="weeks">
+                        <li>일</li>
+                        <li>월</li>
+                        <li>화</li>
+                        <li>수</li>
+                        <li>목</li>
+                        <li>금</li>
+                        <li>토</li>
+                    </ul>
+                    <ul class="days"></ul>
+                </div>
+                <script>init();</script>
+                <table class="attendance_t">
+                    <tr class="log_title">
+                        <td><b>ID</b></td>
+                        <td><b>시간</b></td>
+                        <td><b>입실여부</b></td>
+                        <td><b>비고</b></td>
+                    </tr>
+                    {% for attendance in attendances %}
+                    <tr class="log">
+                        <td><b>{{ attendance.user_id }}</b></td>
+                        <td><b>{{ attendance.timestamp }}</b></td>
+                        <td><b>{{ attendance.is_entering }}</b></td>
+                        <td><b>{{ attendance.remark }}</b></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 </div>
-<!--<br>-->
-<!--data: {{ data }}-->
+
+{% block scripts %}
+{% load static %}
+{% static "" as baseUrl %}
+<script src="{{baseUrl}}js/calender.js"></script>
+{% endblock scripts %}
 {% endblock content %}

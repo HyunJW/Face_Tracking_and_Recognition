@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.wrapper{
+    width: 450px;
+    background: #fff;
+    margin: 0 auto;
+}
+.wrapper .bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+
+.wrapper header{
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+}
+
+header .current-date{
+    font-size: 2.2rem;
+}
+
+header .icons span{
+    height: 38px;
+    width: 38ps;
+    color: #878787;
+    margin: 0 1px;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+header .icons span:hover{
+    background: #f2f2f2;
+}
+
+.calender{
+    padding: 20px;
+}
+
+.calender ul{
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+.calender .days{
+    margin-bottom: 20px;
+}
+
+.calender .weeks li{
+    font-weight: 500;
+}
+
+.calender ul li{
+    position: relative;
+    width: calc(100%/7);
+}
+
+.calender .days li{
+    z-index: 1;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.days li.inactive1{
+    color: #aaa;
+}
+
+.days li.inactive2{
+    color: #aaa;
+}
+
+.days li.active{
+    color: #fff;
+}
+
+.calender .days li::before{
+    position: absolute;
+    content: "";
+    height: 40px;
+    width: 40px;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    border-radius: 10%
+    transform: translate(-50%, -50%);
+}
+
+.days li:hover{
+    background: gray;
+    box-sizing: border-box;
+}
+
+.days li.active::before{
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+}
+
+.current-day{
+    background-color: skyblue;
+}
+
