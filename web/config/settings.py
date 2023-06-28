@@ -63,7 +63,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -73,7 +72,7 @@ DATABASES = {
         'NAME': 'attendance',
         'USER': 'project',
         'PASSWORD': '1234',
-        'HOST': 'localhost',
+        'HOST': '192.168.100.68',
         'PORT': '3306',
     }
 }
