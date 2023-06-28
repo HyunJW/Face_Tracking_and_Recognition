@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}<title>회원가입</title>{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<style>
+    .registration {
+        width: 360px;
+        margin: 0 auto;
+    }
+    p {
+        text-align: center;
+    }
+    label {
+        width: 50%;
+        text-align: left;
+    }
+    .control-label {
+        width: 100%;
+    }
+    .registration .form-actions > button {
+        width: 100%;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="panel panel-default registration">
+    <div class="panel-heading">
+        가입하기
+    </div>
+    <div class="panel-body">
+        <form action="." method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name != 'gender' %}
+                    <div class="form-group {% if field.errors|length > 0 %}has-error{%endif %}">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}*</label>
+                        {% if field.name == 'phone_number' %}
+                            <input name="{{ field.html_name }}" id="{{ field.id_for_lable }}" class="form-control" type="{{ field.field.widget.input_type }}" value="{{ field.value|default_if_none:'' }}" placeholder="{{ field.help_text }}">
+                        {% elif field.name == 'birthdate' %}
+                            <input name="{{ field.html_name }}" id="{{ field.id_for_lable }}" class="form-control" type="date" value="{{ field.value|default_if_none:'' }}">
+                        {% else %}
+                            <input name="{{ field.html_name }}" id="{{ field.id_for_lable }}" class="form-control" type="{{ field.field.widget.input_type }}" value="{{ field.value|default_if_none:'' }}">
+                            {% if field.help_text %}
+                                <p class="help-text">{{ field.help_text }}</p>
+                            {% endif %}
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <label class="control-label" for="{{ field.id_for_label }}">{{ error }}</label>
+                        {% endfor %}
+                    </div>
+                    {% if field.name == 'birthdate' %}
+                        <div class="form-group {% if form.gender.errors %}has-error{% endif %}">
+                            <label for="{{ form.gender.id_for_label }}">성별*</label>
+                            <select name="{{ form.gender.html_name }}" id="{{ form.gender.id_for_label }}" class="form-control">
+                                {% for value, label in form.gender.field.choices %}
+                                    <option value="{{ value }}" {% if form.gender.value == value %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            {% for error in form.gender.errors %}
+                                <label class="control-label" for="{{ form.gender.id_for_label }}">{{ error }}</label>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            <div class="form-actions">
+                <button class="btn btn-primary btn-large" type="submit">가입하기</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
