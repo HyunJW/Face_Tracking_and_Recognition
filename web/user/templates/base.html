@@ -8,13 +8,14 @@
         {% block meta %}    <!-- 페이지별 메타 데이터 공간 -->
         {% endblock meta %}
 
-        {% block scripts %}    <!-- 페이지별 스크립트 공간 -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/eb00b0afb2.js" crossorigin="anonymous"></script>
+        {% block scripts %}    <!-- 페이지별 스크립트 공간 -->
         {% endblock scripts %}
 
-        {% block css %}        <!-- 페이지별 css -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        {% block css %}        <!-- 페이지별 css -->
         {% endblock css %}
     </head>
     <body>
