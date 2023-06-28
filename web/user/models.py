@@ -22,7 +22,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField('성별', max_length=10, choices=GENDERS)
     address = models.CharField('주소', max_length=100)
     phone_number = models.CharField('전화번호', max_length=20)
-    profile_picture = models.ImageField('프로필 사진', upload_to='profile_pictures')
+    profile_picture = models.ImageField('프로필 사진', upload_to='')
     is_staff = models.BooleanField('스태프 권한', default=False)
     is_active = models.BooleanField('사용중', default=True)
     date_joined = models.DateTimeField('가입일', default=timezone.now)

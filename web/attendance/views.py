@@ -8,3 +8,6 @@ def start(request):
 def home(request):
     return render(request, 'attendance/home.html')
 
+
+def user_class(request):
+    return render(request, 'user/class.html')
