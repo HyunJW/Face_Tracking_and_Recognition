@@ -7,7 +7,7 @@ function init() {
   let currentYear = currentDate.getFullYear();
   let currentMonth = currentDate.getMonth();
   let currentDay = currentDate.getDate();
-  let selectDate = null;
+  let selectedDate = currentDate;
   let offset = currentDate.getTimezoneOffset() * 60000;
   const months = [
     "1월",
@@ -130,5 +130,19 @@ function init() {
       renderCalendar();
     });
   });
+
+  // 초기화 후 첫 화면에서 디폴트 테이블을 불러오도록 AJAX 요청
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '/home_selected/', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      document.getElementById("table1").innerHTML = xhr.responseText;
+    }
+  };
+  const data = {
+    selectedDate: selectedDate.toISOString()  // 선택된 날짜를 ISO 형식으로 변환하여 전송
+  };
+  xhr.send(JSON.stringify(data));
 
 }
