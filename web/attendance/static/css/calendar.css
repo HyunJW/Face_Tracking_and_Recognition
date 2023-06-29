@@ -45,33 +45,35 @@ header .icons span:hover{
     background: #f2f2f2;
 }
 
-.calender{
+.calendar{
     padding: 20px;
 }
 
-.calender ul{
+.calendar ul{
     display: flex;
     list-style: none;
     flex-wrap: wrap;
+    text-align: center;
 }
 
-.calender .days{
-    margin-bottom: 20px;
+.calendar .days{
+    margin-bottom: 1px;
 }
 
-.calender .weeks li{
+.calendar .weeks li{
     font-weight: 500;
 }
 
-.calender ul li{
+.calendar ul li{
     position: relative;
     width: calc(100%/7);
 }
 
-.calender .days li{
+.calendar .days li{
     z-index: 1;
     cursor: pointer;
-    margin-top: 30px;
+    height: 60px;
+    width: calc(100%/7);
 }
 
 .days li.inactive1{
@@ -86,7 +88,7 @@ header .icons span:hover{
     color: #fff;
 }
 
-.calender .days li::before{
+.calendar .days li::before{
     position: absolute;
     content: "";
     height: 40px;
@@ -95,11 +97,11 @@ header .icons span:hover{
     left: 50%;
     z-index: -1;
     border-radius: 10%
-    transform: translate(-50%, -50%);
+
 }
 
 .days li:hover{
-    background: gray;
+    background: lightgray;
     box-sizing: border-box;
 }
 
@@ -112,5 +114,26 @@ header .icons span:hover{
 
 .current-day{
     background-color: skyblue;
+    border-radius: 100%;
 }
 
+.selected{
+    background-color: yellow;
+    border-radius: 100%;
+      }
+
+.color1{
+    background-color: red;
+    width: 90%;
+    height: 20%;
+    margin-bottom: -10px;
+    margin-left: 3px;
+}
+
+.color2{
+    background-color: green;
+    width: 90%;
+    height: 20%;
+    margin-top: -10px;
+    margin-left: 3px;
+}

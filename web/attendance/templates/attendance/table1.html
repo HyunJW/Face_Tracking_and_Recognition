@@ -1,0 +1,20 @@
+<table class="attendance_t">
+    <tr class="log_title">
+        <td><b>시간</b></td>
+        <td><b>입실여부</b></td>
+        <td><b>비고</b></td>
+    </tr>
+    {% for attendance in attendances %}
+    <tr class="log">
+        <td><b>{{ attendance.timestamp }}</b></td>
+        <td><b>
+            {% if attendance.is_entering %}
+            입
+            {% else %}
+            출
+            {% endif %}
+        </b></td>
+        <td><b>{{ attendance.remark }}</b></td>
+    </tr>
+    {% endfor %}
+</table>
