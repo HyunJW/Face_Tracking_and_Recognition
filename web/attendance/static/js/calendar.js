@@ -8,7 +8,7 @@ function init() {
   let currentMonth = currentDate.getMonth();
   let currentDay = currentDate.getDate();
   let selectDate = null;
-
+  let offset = currentDate.getTimezoneOffset() * 60000;
   const months = [
     "1월",
     "2월",
@@ -75,7 +75,10 @@ function init() {
         dayElement.classList.remove("current-day");
       }
 
-      dayElement.addEventListener("click", () => {
+      dayElement.addEventListener("click", (event) => {
+      const clickedDay = event.target;
+      const clickedDayValue = parseInt(clickedDay.innerText);
+
         // 클릭된 날짜의 정보를 저장
         if(dayElement.className=='inactive1'){
             selectedDate = new Date(currentYear, currentMonth-1, day);
@@ -84,10 +87,29 @@ function init() {
         }else {
             selectedDate = new Date(currentYear, currentMonth, day);
         }
+        selectedDate = new Date(selectedDate - offset);
+
+        const selectedDay = daysTag.querySelector(".selected");
+          if (selectedDay) {
+            selectedDay.classList.remove("selected");
+          }
+          clickedDay.classList.add("selected");
+
+        // AJAX를 사용하여 서버로 데이터 전송
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/home_selected/', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById("table1").innerHTML=xhr.responseText;
+            }
+        };
+        const data = {
+            selectedDate: selectedDate.toISOString()  // 선택된 날짜를 ISO 형식으로 변환하여 전송
+        };
+        xhr.send(JSON.stringify(data));
 
 
-        // 클릭된 날짜 정보 출력
-        console.log("Selected Date:", selectedDate);
       });
     });
   };
@@ -108,4 +130,5 @@ function init() {
       renderCalendar();
     });
   });
+
 }
