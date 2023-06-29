@@ -7,7 +7,7 @@
 }
 
 .wrapper{
-    width: 450px;
+    width: 100%;
     background: #fff;
     margin: 0 auto;
 }
@@ -27,7 +27,7 @@
 }
 
 header .current-date{
-    font-size: 2.2rem;
+    font-size: 2.5rem;
 }
 
 header .icons span{
@@ -74,6 +74,7 @@ header .icons span:hover{
     cursor: pointer;
     height: 60px;
     width: calc(100%/7);
+    font-size: 1.8rem;
 }
 
 .days li.inactive1{
@@ -91,13 +92,12 @@ header .icons span:hover{
 .calendar .days li::before{
     position: absolute;
     content: "";
-    height: 40px;
-    width: 40px;
-    top: 50%;
+    height: 28px;
+    width: 28px;
+    top: 42%;
     left: 50%;
     z-index: -1;
-    border-radius: 10%
-
+    border-radius: 100%
 }
 
 .days li:hover{
@@ -113,27 +113,35 @@ header .icons span:hover{
 }
 
 .current-day{
-    background-color: skyblue;
+  position: relative;
+  color: whitesmoke;
+}
+
+.current-day::before{
+    position: absolute;
+    font-size: 12px;
+    transform: translate(-50%, -95%);
+    background-color: #0000cd;
     border-radius: 100%;
 }
 
-.selected{
-    background-color: yellow;
-    border-radius: 100%;
-      }
-
-.color1{
-    background-color: red;
-    width: 90%;
-    height: 20%;
-    margin-bottom: -10px;
-    margin-left: 3px;
+.current-day:hover {
+  background: lightgray;
 }
 
-.color2{
-    background-color: green;
-    width: 90%;
-    height: 20%;
-    margin-top: -10px;
-    margin-left: 3px;
+.selected {
+  position: relative;
+  color: whitesmoke;
 }
+
+.selected::before {
+  position: absolute;
+  transform: translate(-50%, -95%);
+  font-size: 12px;
+  background-color: deeppink;
+}
+
+.selected:hover {
+  background: lightgray; /* hover 효과 유지 */
+}
+
