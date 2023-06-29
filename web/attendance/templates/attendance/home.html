@@ -43,40 +43,45 @@
         <!--    left area    -->
         <div class="col-sm-6">
             <!--    time check    -->
-            <div class="row">
+            <div class="wrapper">
                 <table class="table table-bordered table-condensed">
                     <tr>
                         <td>입실</td>
-                        <td>time</td>
+                        <td>입실 시간</td>
                         <td>퇴실</td>
-                        <td>time</td>
+                        <td>퇴실 시간</td>
                     </tr>
                 </table>
             </div>
             <!--    class info    -->
-            <div class="row panel panel-default">
-                <div class="panel-heading"><h4 class="panel-title">강좌 이름</h4></div>
+            {% for item in userlist %}
+            <div class="wrapper panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        {{ item.class_id.name }}
+                    </h4>
+                </div>
                 <div class="panel-body">
                     <table class="table table-hover" style="margin-bottom: 0.5px">
                         <tr>
                             <td>학원명</td>
-                            <td>{{ request.academy_info.name }}</td>
+                            <td>{{ item.class_id.academy.name }}</td>
                         </tr>
                         <tr>
                             <td>학원위치</td>
-                            <td>{{ request.academy_info.address }}</td>
+                            <td>{{ item.class_id.academy.address }}</td>
                         </tr>
                         <tr>
                             <td>전화번호</td>
-                            <td>{{ request.academy_info.tel }}</td>
+                            <td>{{ item.class_id.academy.tel }}</td>
                         </tr>
                         <tr>
                             <td>훈련기간</td>
-                            <td>{{ request.class_info.start_date }} ~ {{ request.class_info.end_date }}</td>
+                            <td>{{ item.class_id.start_date }} ~ {{ item.class_id.end_date }}</td>
                         </tr>
                         <tr>
                             <td>금일훈련</td>
-                            <td>date start-time ~ end-time</td>
+                            <td>{{ start_time }} ~ {{ end_time }}</td>
                         </tr>
                         <tr>
                             <table class="table table-hover" style="margin-bottom: 1px">
@@ -125,6 +130,7 @@
                     </table>
                 </div>
             </div>
+            {% endfor %}
         </div>
         <!--    right area    -->
         <div class="col-sm-6">
