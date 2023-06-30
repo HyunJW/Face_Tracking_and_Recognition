@@ -17,6 +17,15 @@ def start(request):
 def home(request):
     user = request.user
     userlist = UserList.objects.filter(student_id=user.id)
+
+    start_time, end_time = get_class_time(userlist)
+
+    in_time, out_time = get_inout_time(user)
+
+    return render(request, 'attendance/home.html', {'userlist': userlist,
+                                                    'start_time': start_time, 'end_time': end_time,
+                                                    'in_time': in_time, 'out_time': out_time})
+def get_class_time(userlist):
     if userlist:
         class_id = userlist[0].class_id.id
         classtime = ClassTime.objects.filter(class_id_id=class_id)[0]
@@ -35,11 +44,23 @@ def home(request):
             start_time, end_time = classtime.sat_start, classtime.sat_end
         elif idx == 6:
             start_time, end_time = classtime.sun_start, classtime.sun_end
-
     else:
         start_time, end_time = None, None
 
-    return render(request, 'attendance/home.html', {'userlist': userlist, 'start_time': start_time, 'end_time': end_time})
+    return start_time, end_time
+
+
+def get_inout_time(user):
+    user_attendances = AttendanceDaily.objects.filter(Q(user_id=user.id) & Q(date=datetime.today().date()))
+
+    if user_attendances:
+        in_time = user_attendances.filter(remark='출석')[0].timestamp
+        out_time = user_attendances.filter(remark='퇴실')
+        if out_time:
+            out_time = out_time[0].timestamp
+        else:
+            out_time = '퇴실 기록이 없습니다.'
+    return in_time, out_time
 
 
 def user_class(request):
