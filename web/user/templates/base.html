@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        {% block title %}      <!-- 페이지별 타이틀 공간 -->
+        <title>출석관리</title>
+        {% endblock title %}
+
+        {% block meta %}    <!-- 페이지별 메타 데이터 공간 -->
+        {% endblock meta %}
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/eb00b0afb2.js" crossorigin="anonymous"></script>
+        {% block scripts %}    <!-- 페이지별 스크립트 공간 -->
+        {% endblock scripts %}
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <style>
+            .container {
+                width: auto;
+                margin-left: 5%;
+                margin-right: 5%
+            }
+        </style>
+        {% block css %}        <!-- 페이지별 css -->
+        {% endblock css %}
+    </head>
+    <body>
+    {% block header %}
+    {% include "navbar.html" %}
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endblock header %}
+    {% block content %}
+    view: {{ view }} <!-- ctx['view'] -->
+    <br>
+    data: {{ data }}  <!-- ctx['data'] -->
+    {% endblock content %}
+    </body>
+</html>

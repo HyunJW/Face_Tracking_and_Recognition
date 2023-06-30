@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.wrapper {
+
+    width: 100%;
+    background: #fff;
+    margin: 0 auto;
+}
+.wrapper .bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+
+.wrapper header{
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+}
+
+header .current-date{
+    font-size: 2.5rem;
+}
+
+header .icons span{
+    height: 38px;
+    width: 38ps;
+    color: #878787;
+    margin: 0 1px;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+header .icons span:hover{
+    background: #f2f2f2;
+}
+
+.calendar{
+    padding: 20px;
+}
+
+.calendar ul{
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.calendar .days{
+    margin-bottom: 1px;
+}
+
+.calendar .weeks li{
+    font-weight: 500;
+}
+
+.calendar ul li{
+    position: relative;
+    width: calc(100%/7);
+}
+
+.calendar .days li{
+    z-index: 1;
+    cursor: pointer;
+    height: 60px;
+    width: calc(100%/7);
+    font-size: 1.8rem;
+}
+
+.days li.inactive1{
+    color: #aaa;
+}
+
+.days li.inactive2{
+    color: #aaa;
+}
+
+.days li.active{
+    color: #fff;
+}
+
+.calendar .days li::before{
+    position: absolute;
+    content: "";
+    height: 28px;
+    width: 28px;
+    top: 42%;
+    left: 50%;
+    z-index: -1;
+    border-radius: 100%
+}
+
+.days li:hover{
+    background: lightgray;
+    box-sizing: border-box;
+}
+
+.days li.active::before{
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+}
+
+.current-day{
+  position: relative;
+  color: whitesmoke;
+}
+
+.current-day::before{
+    position: absolute;
+    font-size: 12px;
+    transform: translate(-50%, -95%);
+    background-color: #0000cd;
+    border-radius: 100%;
+}
+
+.current-day:hover {
+  background: lightgray;
+}
+
+.selected {
+  position: relative;
+  color: whitesmoke;
+}
+
+.selected::before {
+  position: absolute;
+  transform: translate(-50%, -95%);
+  font-size: 12px;
+  background-color: deeppink;
+}
+
+.selected:hover {
+  background: lightgray; /* hover 효과 유지 */
+}
+
