@@ -55,11 +55,11 @@ class FaceDetect():
         face = frame[ymin - boxSize:ymax + boxSize, xmin - boxSize:xmax + boxSize]
         return face
     
-    def detect_face(self, frame, minDetectionConfidence=1, boxColor=(255,0,0)):
+    def detect_face(self, frame, modelSelection, minDetectionConfidence=1, boxColor=(255,0,0)):
         face_lis = []
         
         # 얼굴 인식 모델 초기화
-        face_detection = self.mp_face_detection(min_detection_confidence=minDetectionConfidence)
+        face_detection = self.mp_face_detection(model_selection=modelSelection, min_detection_confidence=minDetectionConfidence)
             
         # 프레임을 RGB로 변환
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
