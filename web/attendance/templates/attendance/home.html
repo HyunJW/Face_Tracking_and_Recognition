@@ -29,7 +29,7 @@
         <!--    left area    -->
         <div class="col-sm-6">
             <!--    time check    -->
-            <div class="row">
+            <div class="wrapper_left">
                 <table class="table table-bordered table-condensed">
                     <tr>
                         <td>입실</td>
@@ -41,7 +41,7 @@
             </div>
             <!--    class info    -->
             {% for item in userlist %}
-            <div class="row panel panel-default">
+            <div class="wrapper_left panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         {{ item.class_id.name }}

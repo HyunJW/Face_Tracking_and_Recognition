@@ -6,8 +6,13 @@
     font-family: "Poppins", sans-serif;
 }
 
-.wrapper{
-    width: 450px;
+.wrapper_left {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.wrapper {
+    width: 100%;
     background: #fff;
     margin: 0 auto;
 }
