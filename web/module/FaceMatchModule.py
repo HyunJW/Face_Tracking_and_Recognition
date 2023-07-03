@@ -18,7 +18,7 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 import copy
 import cv2
 import os
-import SiameseNetwork
+import module.SiameseNetwork as SiameseNetwork
 import mediapipe as mp
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
@@ -77,12 +77,12 @@ class FaceMatch():
 
     def match_face(self, face_list1, dir, min_distance=0.1):
         face_list2 = self.load_face(dir)
+        id_list = []
         for f1 in face_list1:
             for f2 in face_list2:
                 if self.match_face_1x1(f1, f2[0], min_distance):
-                    return f2[1]
-                else:
-                    return -1
+                    id_list.append(f2[1])
+        return id_list
             
 
     
