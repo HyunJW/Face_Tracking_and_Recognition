@@ -30,7 +30,7 @@ class CameraBackgroundTask(threading.Thread):
 
             # 얼굴을 인식하여 리스트에 저장
             face_lis = self.fd.detect_face(frame, 1)
-            id_list = self.fm.match_face(face_lis, 'web/user/static/media/profile_pictures')
+            id_list = self.fm.match_face(face_lis, './user/static/media/profile_pictures')
             # 타임스탬프에 찍기
             for id in id_list:
                 save_attendance(id)
