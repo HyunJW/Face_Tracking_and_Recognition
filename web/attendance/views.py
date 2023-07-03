@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
-from .models import AttendanceDaily, UserList, ClassTime
+from .models import Attendance, UserList, ClassTime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import json
@@ -30,6 +30,7 @@ class CameraBackgroundTask(threading.Thread):
 
             # 얼굴을 인식하여 리스트에 저장
             face_lis = self.fd.detect_face(frame, 1)
+            # 매치되는 얼굴이 있으면 리스트에 저장
             id_list = self.fm.match_face(face_lis, './user/static/media/profile_pictures')
             # 타임스탬프에 찍기
             for id in id_list:
@@ -78,7 +79,7 @@ def home_selected(request):
     data = json.loads(request.body)
     selected_date = data.get('selectedDate')
     selected_date = selected_date.split('T')[0]
-    selected_log = AttendanceDaily.objects.filter(date=selected_date)
+    selected_log = Attendance.objects.filter(date=selected_date)
     user = request.user
     attendances = selected_log.filter(user_id=user.id)
 
@@ -117,7 +118,7 @@ def save_attendance(user_id):
 
     is_entering = 0
     remark = attend_divide(is_entering, start_time, end_time)
-    attendance = AttendanceDaily(is_entering=is_entering,
+    attendance = Attendance(is_entering=is_entering,
                                  remark=remark,
                                  user_id=user)
     attendance.save()
@@ -138,16 +139,21 @@ def attend_divide(is_entering, start_time, end_time):
 
 
 def get_inout_time(user):
-    user_attendances = AttendanceDaily.objects.filter(Q(user_id=user.id) & Q(date=datetime.today().date()))
+    user_attendances = Attendance.objects.filter(Q(user_id=user.id) & Q(date=datetime.today().date()))
 
-    if user_attendances:
-        # in_time = user_attendances.filter(remark='입실')[0].timestamp
-        # out_time = user_attendances.filter(remark='퇴실')[0].timestamp
-        in_time = ''
-        out_time = ''
+    in_time = user_attendances.filter(remark='입실')
+    out_time = user_attendances.filter(remark='퇴실')
+
+    if in_time:
+        in_time = user_attendances.filter(remark='입실')[0].timestamp
     else:
         in_time = ''
+
+    if out_time:
+        out_time = user_attendances.filter(remark='퇴실')[0].timestamp
+    else:
         out_time = ''
+
     return in_time, out_time
 
 
