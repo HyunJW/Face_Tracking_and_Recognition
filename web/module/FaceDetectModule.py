@@ -37,7 +37,7 @@ class FaceDetect():
         print(f'mp4 파일을 avi 형식으로 변환하여 {output_video}에 저장')
         return output_video
 
-    def draw_box(self, frame, detection, boxColor=(255,0,0), thickness=2):
+    def draw_box(self, frame, detection, boxColor, thickness=2):
         # 랜드마크 점의 스타일 변경
         landmark_drawing_spec = self.mp_drawing.DrawingSpec(color=(0, 0, 0), thickness=0, circle_radius=0)
             
@@ -59,7 +59,7 @@ class FaceDetect():
         face_lis = []
         
         # 얼굴 인식 모델 초기화
-        face_detection = self.mp_face_detection(model_selection=modelSelection, min_detection_confidence=minDetectionConfidence)
+        face_detection = self.mp_face_detection.FaceDetection(model_selection=modelSelection, min_detection_confidence=minDetectionConfidence)
             
         # 프레임을 RGB로 변환
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
