@@ -1,13 +1,13 @@
 import cv2
 import mediapipe as mp
-import matplotlib.pyplot as plt
-import os
+import numpy as np
+
 
 class FaceDetect():
     def __init__(self):
         self.mp_face_detection = mp.solutions.face_detection
         self.mp_drawing = mp.solutions.drawing_utils
-    
+
     def mp4_to_avi(self, input_video, output_video):
         # 원본 mp4 파일을 읽기 위한 비디오 캡처 객체 생성
         cap = cv2.VideoCapture(input_video)
@@ -40,7 +40,7 @@ class FaceDetect():
     def draw_box(self, frame, detection, boxColor, thickness=2):
         # 랜드마크 점의 스타일 변경
         landmark_drawing_spec = self.mp_drawing.DrawingSpec(color=(0, 0, 0), thickness=0, circle_radius=0)
-            
+
         # 얼굴 박스의 스타일 변경
         bbox_drawing_spec = self.mp_drawing.DrawingSpec(color=boxColor, thickness=thickness)
         self.mp_drawing.draw_detection(frame, detection, landmark_drawing_spec, bbox_drawing_spec)
@@ -54,13 +54,14 @@ class FaceDetect():
         xmax = int((relative_bounding_box.xmin + relative_bounding_box.width) * frame.shape[1])
         face = frame[ymin - boxSize:ymax + boxSize, xmin - boxSize:xmax + boxSize]
         return face
-    
-    def detect_face(self, frame, modelSelection, minDetectionConfidence=1, boxColor=(255,0,0)):
+
+    def detect_face(self, frame, modelSelection, minDetectionConfidence=1, box_Color=(255, 0, 0)):
         face_lis = []
-        
+
         # 얼굴 인식 모델 초기화
-        face_detection = self.mp_face_detection.FaceDetection(model_selection=modelSelection, min_detection_confidence=minDetectionConfidence)
-            
+        face_detection = self.mp_face_detection.FaceDetection(model_selection=modelSelection,
+                                                              min_detection_confidence=minDetectionConfidence)
+
         # 프레임을 RGB로 변환
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
@@ -71,7 +72,6 @@ class FaceDetect():
         if results.detections:
             for detection in results.detections:
                 # 경계 상자 그리기
-                self.draw_box(frame, detection, box_color=boxColor)
+                self.draw_box(frame, detection, boxColor=box_Color)
                 face_lis.append(self.detection_to_image(frame, detection))
         return face_lis
-    
