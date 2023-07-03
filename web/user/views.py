@@ -58,8 +58,8 @@ def user_edit(request):
     if request.method == 'POST':
         user_change_form = EditForm(request.POST, request.FILES, instance=request.user)
         if user_change_form.is_valid():
-            user_change_form.save()
             profile_picture = request.FILES.get('profile_picture')
+
             if profile_picture:
                 user_id = str(request.user.id)
                 extension = profile_picture.name.split('.')[-1]
@@ -76,6 +76,8 @@ def user_edit(request):
 
                 request.user.profile_picture.name = f'profile_pictures/{new_filename}'
                 request.user.save()
+
+            user_change_form.save()
 
             messages.success(request, '회원정보가 수정되었습니다.')
             return render(request, 'user/info.html')
