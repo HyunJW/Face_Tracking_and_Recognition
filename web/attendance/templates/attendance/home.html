@@ -43,6 +43,7 @@
         <!--    left area    -->
         <div class="col-sm-6">
             <!--    time check    -->
+            {% for item in userlist %}
             <div class="wrapper">
                 <table class="table table-bordered table-condensed">
                     <tr>
@@ -54,7 +55,6 @@
                 </table>
             </div>
             <!--    class info    -->
-            {% for item in userlist %}
             <div class="wrapper panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
