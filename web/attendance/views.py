@@ -112,7 +112,6 @@ def get_class_time(userlist):
 
 
 def save_attendance(user_id):
-    user = User.objects.get(id=user_id)
     userlist = UserList.objects.filter(student_id=user_id)
     start_time, end_time = get_class_time(userlist)
 
