@@ -70,6 +70,7 @@ def start(request):
 def home(request):
     user = request.user
     userlist = UserList.objects.filter(student_id=user.id)
+    print(userlist.count())
 
     start_time, end_time = get_class_time(userlist)
 
