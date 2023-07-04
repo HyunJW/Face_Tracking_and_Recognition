@@ -187,6 +187,7 @@ def get_inout_time(user):
     else:
         in_time = ''
         out_time = ''
+
     return in_time, out_time
 
 
