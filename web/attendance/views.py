@@ -125,13 +125,13 @@ def save_attendance(user_id, entering):
     is_entering = entering
     remark = attend_divide(user_id, is_entering, start_time, end_time)
     attendance = Attendance(is_entering=is_entering, remark=remark, user_id=user_id)
-    prev_attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date()))[-1]
+    prev_attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date())).latest('index')
     if prev_attendance.is_entering == entering:
         pass
     else:
         if prev_attendance.remark == '퇴실':
             pass
-        elif datetime.time() > end_time:
+        elif datetime.now().time() > end_time:
             if prev_attendance.is_entering == 0:
                 prev_attendance.remark = '조퇴'
                 prev_attendance.save()
@@ -144,22 +144,22 @@ def attend_divide(user_id, is_entering, start_time, end_time):
     # When the user is entering the building
     if is_entering == 1:
         if not attendance:                                                  # if it is the first timestamp
-            if datetime.time() <= start_time:                                   # if user arrived on time
+            if datetime.now().time() <= start_time:                                   # if user arrived on time
                 remark = '입실'
             else:                                                               # if user is late
                 remark = '지각'
         else:                                                               # if it is not the first timestamp
-            if datetime.now() - timedelta(hours=1) > attendance.filter(is_entering=0)[-1].timestamp:
+            if datetime.now() - timedelta(hours=1) > attendance.filter(is_entering=0).latest('index').timestamp:
                 remark = '복귀'                                                  # if user was outside for more than one hour
                 # 전 기록의 remark를 '외출'로 변경
-                attendance[-1].remark = '외출'
-                attendance[-1].save()
+                attendance.latest('index').remark = '외출'
+                attendance.latest('index').save()
             else:                                                               # if none of the those options
                 remark = ''
 
     # When the user is exiting the building
     else:
-        if datetime.time() >= end_time:
+        if datetime.now().time() >= end_time:
             remark = '퇴실'
         else:
             remark = ''
