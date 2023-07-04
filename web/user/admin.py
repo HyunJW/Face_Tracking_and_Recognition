@@ -56,6 +56,8 @@ class ClassInfoAdmin(admin.ModelAdmin):
         return obj.start_date.strftime("%Y-%m-%d")
 
     def ending_date(self, obj):
+        if obj.end_date is None:
+            return ''
         return obj.end_date.strftime("%Y-%m-%d")
 
     starting_date.admin_order_field = '-start_date'
@@ -70,36 +72,29 @@ class ClassTimeAdmin(admin.ModelAdmin):
                     'wednesday_end', 'thursday_start', 'thursday_end', 'friday_start', 'friday_end', 'saturday_end',
                     'saturday_end', 'sunday_start', 'sunday_end')
     list_display_links = ('class_id',)
+    day_list = [['monday', 'mon', '월요일'], ['tuesday', 'tue', '화요일'], ['wednesday', 'wed', '수요일'], ['thursday', 'thu', '목요일'],
+                ['friday', 'fri', '금요일'], ['saturday', 'sat', '토요일'], ['sunday', 'sun', '일요일']]
+    for days in day_list:
+        day = days[0]
+        abb = days[1]
+        word = days[2]
+        day_start = f'{day}_start'
+        day_end = f'{day}_end'
+        abb_start = f'{abb}_start'
+        abb_end = f'{abb}_end'
 
-    def monday_start(self, obj): return obj.mon_start.strftime("%H:%M")
-    def monday_end(self, obj): return obj.mon_end.strftime("%H:%M")
-    def tuesday_start(self, obj): return obj.tue_start.strftime("%H:%M")
-    def tuesday_end(self, obj): return obj.tue_end.strftime("%H:%M")
-    def wednesday_start(self, obj): return obj.wed_start.strftime("%H:%M")
-    def wednesday_end(self, obj): return obj.wed_end.strftime("%H:%M")
-    def thursday_start(self, obj): return obj.thu_start.strftime("%H:%M")
-    def thursday_end(self, obj): return obj.thu_end.strftime("%H:%M")
-    def friday_start(self, obj): return obj.fri_start.strftime("%H:%M")
-    def friday_end(self, obj): return obj.fri_end.strftime("%H:%M")
-    def saturday_start(self, obj): return obj.sat_start.strftime("%H:%M")
-    def saturday_end(self, obj): return obj.sat_end.strftime("%H:%M")
-    def sunday_start(self, obj): return obj.sun_start.strftime("%H:%M")
-    def sunday_end(self, obj): return obj.sun_end.strftime("%H:%M")
+        def day_start(self, obj):
+            if obj.abb_start is None:
+                return ''
+            return obj.abb_start.strftime("%H:%M")
 
-    monday_start.short_description = '월요일 시작시간'
-    tuesday_start.short_description = '화요일 시작시간'
-    wednesday_start.short_description = '수요일 시작시간'
-    thursday_start.short_description = '목요일 시작시간'
-    friday_start.short_description = '금요일 시작시간'
-    saturday_start.short_description = '토요일 시작시간'
-    sunday_start.short_description = '일요일 시작시간'
-    monday_end.short_description = '월요일 종료시간'
-    tuesday_end.short_description = '화요일 종료시간'
-    wednesday_end.short_description = '수월요일 종료시간'
-    thursday_end.short_description = '목요일 종료시간'
-    friday_end.short_description = '금요일 종료시간'
-    saturday_end.short_description = '토요일 종료시간'
-    sunday_end.short_description = '일요일 종료시간'
+        def day_end(self, obj):
+            if obj.abb_end is None:
+                return ''
+            return obj.abb_end.strftime("%H:%M")
+
+        day_start.short_description = f'{word} 시작시간'
+        day_end.short_description = f'{word} 종료시간'
 
 
 @admin.register(UserList)
