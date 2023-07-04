@@ -16,30 +16,34 @@ User = get_user_model()
 
 
 class CameraBackgroundTask(threading.Thread):
-    def __init__(self):
+    def __init__(self, camera_index):
         super(CameraBackgroundTask, self).__init__()
         self._stop_event = threading.Event()
         self.fd = FaceDetect()
         self.fm = FaceMatch()
+        self.camera_index = camera_index
 
     def run(self):
-        cap = cv2.VideoCapture(0)  # 웹캠에 접근하기 위해 0을 사용합니다.
+        cap = cv2.VideoCapture(self.camera_index)  # 웹캠에 접근하기 위해 0을 사용합니다.
         # cap = cv2.VideoCapture('d:/video/enter.mp4') # 동영상 사용
 
         while not self._stop_event.is_set():
             ret, frame = cap.read()  # 영상 프레임을 읽어옵니다.
 
             # 얼굴을 인식하여 리스트에 저장
-            face_lis = self.fd.detect_face(frame, 0)
+            face_list = self.fd.detect_face(frame, 0)
 
             # 매치되는 얼굴이 있으면 리스트에 저장
-            id_list = self.fm.match_face(face_lis, './user/static/media/profile_pictures')
+            id_list = self.fm.match_face(face_list, './user/static/media/profile_pictures')
 
             # 타임스탬프에 찍기
             for id in id_list:
-                save_attendance(id)
+                save_attendance(id, self.camera_index)
 
-            cv2.imshow('Camera', frame)
+            if self.camera_index == 1:
+                cv2.imshow('출석관리 입구쪽', frame)
+            else:
+                cv2.imshow('출석관리 출구쪽', frame)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
@@ -114,22 +118,25 @@ def get_class_time(userlist):
     return start_time, end_time
 
 
-def save_attendance(user_id):
+def save_attendance(user_id, entering):
     userlist = UserList.objects.filter(student_id=user_id)
     start_time, end_time = get_class_time(userlist)
 
-    is_entering = 1
+    is_entering = entering
     remark = attend_divide(user_id, is_entering, start_time, end_time)
     attendance = Attendance(is_entering=is_entering, remark=remark, user_id=user)
     prev_attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date()))[-1]
-    if prev_attendance.remark == '퇴실':
+    if prev_attendance.is_entering == entering:
         pass
-    elif datetime.time() > end_time:
-        if prev_attendance.is_entering == 0:
-            prev_attendance.remark = '조퇴'
-            prev_attendance.save()
     else:
-        attendance.save()
+        if prev_attendance.remark == '퇴실':
+            pass
+        elif datetime.time() > end_time:
+            if prev_attendance.is_entering == 0:
+                prev_attendance.remark = '조퇴'
+                prev_attendance.save()
+        else:
+            attendance.save()
 
 
 def attend_divide(user_id, is_entering, start_time, end_time):
