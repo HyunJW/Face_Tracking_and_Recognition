@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.shortcuts import render, redirect
-from .models import Attendance, UserList, ClassTime
+from attendance.models import Attendance, UserList, ClassTime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import json
@@ -119,25 +119,43 @@ def save_attendance(user_id):
     start_time, end_time = get_class_time(userlist)
 
     is_entering = 1
-    remark = attend_divide(is_entering, start_time, end_time)
-    # print(user_id, remark)
-    attendance = Attendance(is_entering=is_entering,
-                            remark=remark,
-                            user_id=user_id)
-    attendance.save()
+    remark = attend_divide(user_id, is_entering, start_time, end_time)
+    attendance = Attendance(is_entering=is_entering, remark=remark, user_id=user)
+    prev_attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date()))[-1]
+    if prev_attendance.remark == '퇴실':
+        pass
+    elif datetime.time() > end_time:
+        if prev_attendance.is_entering == 0:
+            prev_attendance.remark = '조퇴'
+            prev_attendance.save()
+    else:
+        attendance.save()
 
 
-def attend_divide(is_entering, start_time, end_time):
+def attend_divide(user_id, is_entering, start_time, end_time):
+    attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date()))
+    # When the user is entering the building
     if is_entering == 1:
-        if datetime.now().time() <= start_time:
-            remark = '입실'  # User is entering
-        else:
-            remark = '지각'  # User is late (or returning)
-    elif is_entering == 0:
-        if datetime.now().time() >= end_time:
+        if not attendance:                                                  # if it is the first timestamp
+            if datetime.time() <= start_time:                                   # if user arrived on time
+                remark = '입실'
+            else:                                                               # if user is late
+                remark = '지각'
+        else:                                                               # if it is not the first timestamp
+            if datetime.now() - timedelta(hours=1) > attendance.filter(is_entering=0)[-1].timestamp:
+                remark = '복귀'                                                  # if user was outside for more than one hour
+                # 전 기록의 remark를 '외출'로 변경
+                attendance[-1].remark = '외출'
+                attendance[-1].save()
+            else:                                                               # if none of the those options
+                remark = ''
+
+    # When the user is exiting the building
+    else:
+        if datetime.time() >= end_time:
             remark = '퇴실'
         else:
-            remark = '조퇴'
+            remark = ''
     return remark
 
 
@@ -162,6 +180,3 @@ def get_inout_time(user):
 
 def user_class(request):
     return render(request, 'user/class.html')
-
-
-
