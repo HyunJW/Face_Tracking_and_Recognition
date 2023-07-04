@@ -169,16 +169,16 @@ def attend_divide(user_id, is_entering, start_time, end_time):
 def get_inout_time(user):
     user_attendances = Attendance.objects.filter(Q(user_id=user.id) & Q(date=datetime.today().date()))
 
-    in_time = user_attendances.filter(remark='입실')
-    out_time = user_attendances.filter(remark='퇴실')
+    in_time_lis = user_attendances.filter(Q(remark='입실') | Q(remark='지각'))
+    out_time_lis = user_attendances.filter(Q(remark='퇴실') | Q(remark='조퇴'))
 
-    if in_time:
-        in_time = user_attendances.filter(remark='입실')[0].timestamp
+    if in_time_lis:
+        in_time = in_time_lis[0].timestamp
     else:
         in_time = ''
 
-    if out_time:
-        out_time = user_attendances.filter(remark='퇴실')[0].timestamp
+    if out_time_lis:
+        out_time = out_time_lis[0].timestamp
     else:
         out_time = ''
 
