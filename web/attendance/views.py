@@ -118,11 +118,19 @@ def save_attendance(user_id):
     is_entering = 1
     remark = attend_divide(user_id, is_entering, start_time, end_time)
     attendance = Attendance(is_entering=is_entering, remark=remark, user_id=user)
-    attendance.save()
+    prev_attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date()))[-1]
+    if prev_attendance.remark == '퇴실':
+        pass
+    elif datetime.time() > end_time:
+        if prev_attendance.is_entering == 0:
+            prev_attendance.remark = '조퇴'
+            prev_attendance.save()
+    else:
+        attendance.save()
 
 
 def attend_divide(user_id, is_entering, start_time, end_time):
-    attendance = Attendance.objects.filter(student_id=user_id)
+    attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date()))
     # When the user is entering the building
     if is_entering == 1:
         if not attendance:                                                  # if it is the first timestamp
@@ -131,9 +139,11 @@ def attend_divide(user_id, is_entering, start_time, end_time):
             else:                                                               # if user is late
                 remark = '지각'
         else:                                                               # if it is not the first timestamp
-            if datetime.now() - timedelta(hours=1) > attendance.filter(is_entering)[-1].timestamp:
+            if datetime.now() - timedelta(hours=1) > attendance.filter(is_entering=0)[-1].timestamp:
                 remark = '복귀'                                                  # if user was outside for more than one hour
                 # 전 기록의 remark를 '외출'로 변경
+                attendance[-1].remark = '외출'
+                attendance[-1].save()
             else:                                                               # if none of the those options
                 remark = ''
 
@@ -142,7 +152,7 @@ def attend_divide(user_id, is_entering, start_time, end_time):
         if datetime.time() >= end_time:
             remark = '퇴실'
         else:
-            remark = '조퇴'
+            remark = ''
     return remark
 
 
