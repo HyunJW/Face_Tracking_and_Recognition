@@ -1,24 +1,12 @@
-import torchvision
-import torchvision.datasets as dset
 import torchvision.transforms as transforms
-from torch.utils.data import DataLoader, Dataset
-import matplotlib.pyplot as plt
-import torchvision.utils
 import numpy as np
-import random
 from PIL import Image
 import torch
 from torch.autograd import Variable
-import PIL.ImageOps
-import torch.nn as nn
-from torch import optim
 import torch.nn.functional as F
-import shutil
-from torch.optim.lr_scheduler import ReduceLROnPlateau
-import copy
 import cv2
 import os
-from module import SiameseNetwork
+from module import SiameseNetwork, FaceDetectModule
 import mediapipe as mp
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
@@ -29,7 +17,7 @@ class FaceMatch():
     def __init__(self):
         self.mp_face_detection = mp.solutions.face_detection
 
-    def rotate():
+    def rotate(self):
         pass
 
     def load_face(self, dir):
@@ -45,7 +33,7 @@ class FaceMatch():
             face = cv2.imread(file_path)
 
             # 배경 제거
-            image_rgb = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
+            image_rgb = FaceDetectModule.FaceDetect().detect_face(face, 0)[0]
             result = change_bg_segment.process(image_rgb)
             binary_mask = result.segmentation_mask > 0.2  # 0.2 값이 1에 가까울수록 얼굴 인식 범위가 깐깐해짐
             binary_mask_3 = np.dstack((binary_mask, binary_mask, binary_mask))
@@ -67,9 +55,16 @@ class FaceMatch():
                                         transforms.Grayscale(),
                                         transforms.ToTensor()])
 
+        face1 = cv2.cvtColor(face1, cv2.COLOR_BGR2RGB)
+        face2 = cv2.cvtColor(face2, cv2.COLOR_BGR2RGB)
+
         # numpy 배열을 PIL 이미지로 변환
         face1 = Image.fromarray(face1)
         face2 = Image.fromarray(face2)
+
+        # # 매칭 이미지를 확인하기 위한 저장
+        # face1.save('d:/video/1.jpg')
+        # face2.save('d:/video/2.jpg')
 
         # 변환된 PIL 이미지에 transforms 적용
         face1 = transform(face1)
@@ -81,13 +76,14 @@ class FaceMatch():
 
         f1, f2 = net(Variable(face1).cuda(), Variable(face2).cuda())
         euclidean_distance = F.pairwise_distance(f1, f2)
+        # print(euclidean_distance)
         if euclidean_distance <= min_distance:
             match = True
         else:
             match = False
         return match
 
-    def match_face(self, face_list1, dir, min_distance=1.5):
+    def match_face(self, face_list1, dir, min_distance=0.8):
         face_list2 = self.load_face(dir)
 
         id_list = []

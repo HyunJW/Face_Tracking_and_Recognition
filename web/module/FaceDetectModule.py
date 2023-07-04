@@ -1,6 +1,5 @@
 import cv2
 import mediapipe as mp
-import numpy as np
 
 
 class FaceDetect():
@@ -45,7 +44,7 @@ class FaceDetect():
         bbox_drawing_spec = self.mp_drawing.DrawingSpec(color=boxColor, thickness=thickness)
         self.mp_drawing.draw_detection(frame, detection, landmark_drawing_spec, bbox_drawing_spec)
 
-    def detection_to_image(self, frame, detection, boxSize=200):
+    def detection_to_image(self, frame, detection, boxSize=0):
         # 얼굴 부분만 잘라내기
         relative_bounding_box = detection.location_data.relative_bounding_box
         ymin = int(relative_bounding_box.ymin * frame.shape[0])
@@ -71,7 +70,10 @@ class FaceDetect():
         # 얼굴 인식 결과 그리기
         if results.detections:
             for detection in results.detections:
-                # 경계 상자 그리기
-                self.draw_box(frame, detection, boxColor=box_Color)
-                face_lis.append(self.detection_to_image(frame, detection))
+                scores = detection.score
+
+                if len(scores) > 0 and scores[0] >= 0.7:
+                    # 경계 상자 그리기
+                    # self.draw_box(frame, detection, boxColor=box_Color)
+                    face_lis.append(self.detection_to_image(frame, detection))
         return face_lis

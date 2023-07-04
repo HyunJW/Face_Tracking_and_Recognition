@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from django.shortcuts import render, redirect
 from .models import Attendance, UserList, ClassTime
 from django.contrib.auth.decorators import login_required
@@ -24,14 +24,17 @@ class CameraBackgroundTask(threading.Thread):
 
     def run(self):
         cap = cv2.VideoCapture(0)  # 웹캠에 접근하기 위해 0을 사용합니다.
+        # cap = cv2.VideoCapture('d:/video/enter.mp4') # 동영상 사용
 
         while not self._stop_event.is_set():
             ret, frame = cap.read()  # 영상 프레임을 읽어옵니다.
 
             # 얼굴을 인식하여 리스트에 저장
-            face_lis = self.fd.detect_face(frame, 1)
+            face_lis = self.fd.detect_face(frame, 0)
+
             # 매치되는 얼굴이 있으면 리스트에 저장
             id_list = self.fm.match_face(face_lis, './user/static/media/profile_pictures')
+
             # 타임스탬프에 찍기
             for id in id_list:
                 save_attendance(id)
@@ -115,22 +118,23 @@ def save_attendance(user_id):
     userlist = UserList.objects.filter(student_id=user_id)
     start_time, end_time = get_class_time(userlist)
 
-    is_entering = 0
+    is_entering = 1
     remark = attend_divide(is_entering, start_time, end_time)
+    # print(user_id, remark)
     attendance = Attendance(is_entering=is_entering,
-                                 remark=remark,
-                                 user_id=user_id)
+                            remark=remark,
+                            user_id=user_id)
     attendance.save()
 
 
 def attend_divide(is_entering, start_time, end_time):
     if is_entering == 1:
-        if datetime.time() <= start_time:
+        if datetime.now().time() <= start_time:
             remark = '입실'  # User is entering
         else:
             remark = '지각'  # User is late (or returning)
     elif is_entering == 0:
-        if datetime.time() >= end_time:
+        if datetime.now().time() >= end_time:
             remark = '퇴실'
         else:
             remark = '조퇴'
