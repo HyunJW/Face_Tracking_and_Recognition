@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
 from attendance.models import Attendance, UserList, ClassTime
 from django.contrib.auth.decorators import login_required
@@ -124,7 +124,7 @@ def save_attendance(user_id, entering):
 
     is_entering = entering
     remark = attend_divide(user_id, is_entering, start_time, end_time)
-    attendance = Attendance(is_entering=is_entering, remark=remark, user_id=user)
+    attendance = Attendance(is_entering=is_entering, remark=remark, user_id=user_id)
     prev_attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date()))[-1]
     if prev_attendance.is_entering == entering:
         pass
