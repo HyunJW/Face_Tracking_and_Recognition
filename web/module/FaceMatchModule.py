@@ -76,7 +76,6 @@ class FaceMatch():
 
         f1, f2 = net(Variable(face1).cuda(), Variable(face2).cuda())
         euclidean_distance = F.pairwise_distance(f1, f2)
-        # print(euclidean_distance)
         if euclidean_distance <= min_distance:
             match = True
         else:
