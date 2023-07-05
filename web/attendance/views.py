@@ -140,8 +140,7 @@ def save_attendance(user_id, entering):
                 pass
             elif datetime.now().time() > end_time:
                 if prev_attendance.is_entering == 0:
-                    prev_attendance.remark = '조퇴'
-                    prev_attendance.save()
+                    prev_attendance.update(remark='조퇴')
             else:
                 attendance.save()
     except Attendance.DoesNotExist:
@@ -161,13 +160,13 @@ def attend_divide(user_id, is_entering, start_time, end_time):
             else:                                                               # if user is late
                 remark = '지각'
         else:                                                               # if it is not the first timestamp
-            if attendance.latest('index').remark == 1:
-                if datetime.now() - timedelta(hours=1) > attendance.filter(is_entering=0).latest('index').timestamp:
-                    remark = '복귀'                                                  # if user was outside for more than one hour
+            if not attendance.latest('index').is_entering:
+                comeback_time = attendance.filter(is_entering=0).latest('index').timestamp
+                if datetime.now() - timedelta(hours=1) > datetime.combine(datetime.today().date(), comeback_time):
+                    remark = '복귀'  # if user was outside for more than one hour
                     # 전 기록의 remark를 '외출'로 변경
-                    attendance.latest('index').remark = '외출'
-                    attendance.latest('index').save()
-                else:                                                               # if none of the those options
+                    attendance.filter(index=attendance.latest('index').index).update(remark='외출')
+                else:  # if none of the those options
                     remark = ''
             else:
                 remark = ''

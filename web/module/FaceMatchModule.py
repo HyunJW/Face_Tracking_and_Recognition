@@ -83,11 +83,14 @@ class FaceMatch():
         return match
 
     def match_face(self, face_list1, dir, min_distance=0.8):
-        face_list2 = self.load_face(dir)
+        try:
+            face_list2 = self.load_face(dir)
 
-        id_list = []
-        for f1 in face_list1:
-            for f2 in face_list2:
-                if self.match_face_1x1(f1, f2[0], min_distance):
-                    id_list.append(f2[1])
+            id_list = []
+            for f1 in face_list1:
+                for f2 in face_list2:
+                    if self.match_face_1x1(f1, f2[0], min_distance):
+                        id_list.append(f2[1])
+        except:
+            id_list = []
         return id_list
