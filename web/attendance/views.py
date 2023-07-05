@@ -26,7 +26,7 @@ class CameraBackgroundTask(threading.Thread):
         self.camera_index = camera_index
 
     def run(self):
-        cap = cv2.VideoCapture(self.camera_index)  # 웹캠에 접근하기 위해 0을 사용합니다.
+        cap = cv2.VideoCapture(self.camera_index)
         # cap = cv2.VideoCapture('d:/video/enter.mp4') # 동영상 사용
 
         while not self._stop_event.is_set():
@@ -151,7 +151,6 @@ def save_attendance(user_id, entering):
             attendance.save()
 
 
-
 def attend_divide(user_id, is_entering, start_time, end_time):
     attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date()))
     # When the user is entering the building
@@ -162,12 +161,15 @@ def attend_divide(user_id, is_entering, start_time, end_time):
             else:                                                               # if user is late
                 remark = '지각'
         else:                                                               # if it is not the first timestamp
-            if datetime.now() - timedelta(hours=1) > attendance.filter(is_entering=0).latest('index').timestamp:
-                remark = '복귀'                                                  # if user was outside for more than one hour
-                # 전 기록의 remark를 '외출'로 변경
-                attendance.latest('index').remark = '외출'
-                attendance.latest('index').save()
-            else:                                                               # if none of the those options
+            if attendance.latest('index').remark == 1:
+                if datetime.now() - timedelta(hours=1) > attendance.filter(is_entering=0).latest('index').timestamp:
+                    remark = '복귀'                                                  # if user was outside for more than one hour
+                    # 전 기록의 remark를 '외출'로 변경
+                    attendance.latest('index').remark = '외출'
+                    attendance.latest('index').save()
+                else:                                                               # if none of the those options
+                    remark = ''
+            else:
                 remark = ''
 
     # When the user is exiting the building
@@ -217,7 +219,6 @@ def get_class_days(user_id):
             remove = remove.union(filtered_attendance)
         else:
             total_days += 1
-    print(remove)
     attendance = attendance.exclude(index__in=remove.values('index'))
 
     early = attendance.filter(remark='조퇴').count()
