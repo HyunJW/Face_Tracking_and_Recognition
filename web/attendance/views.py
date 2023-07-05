@@ -161,12 +161,16 @@ def attend_divide(user_id, is_entering, start_time, end_time):
             else:                                                               # if user is late
                 remark = '지각'
         else:                                                               # if it is not the first timestamp
-            if datetime.now() - timedelta(hours=1) > attendance.filter(is_entering=0).latest('index').timestamp:
-                remark = '복귀'                                                  # if user was outside for more than one hour
-                # 전 기록의 remark를 '외출'로 변경
-                attendance.latest('index').remark = '외출'
-                attendance.latest('index').save()
-            else:                                                               # if none of the those options
+            if attendance.latest('index').remark == 1:
+                comeback_time = attendance.filter(is_entering=0).latest('index').timestamp
+                if datetime.now() - timedelta(hours=1) > datetime.combine(datetime.today().date(), comeback_time):
+                    remark = '복귀'  # if user was outside for more than one hour
+                    # 전 기록의 remark를 '외출'로 변경
+                    attendance.latest('index').remark = '외출'
+                    attendance.latest('index').save()
+                else:  # if none of the those options
+                    remark = ''
+            else:
                 remark = ''
 
     # When the user is exiting the building
@@ -216,7 +220,6 @@ def get_class_days(user_id):
             remove = remove.union(filtered_attendance)
         else:
             total_days += 1
-    print(remove)
     attendance = attendance.exclude(index__in=remove.values('index'))
 
     early = attendance.filter(remark='조퇴').count()
