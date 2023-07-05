@@ -13,13 +13,12 @@
 
 {% load static %}
 {% static "" as baseUrl %}
-<!--<link rel="stylesheet" href="{{baseUrl}}css/attendance.css" type="text/css">-->
 <link rel="stylesheet" href="{{baseUrl}}css/calendar.css" type="text/css">
 <style>
     .circle-text {
         text-align: center;
         position: absolute;
-        top: 40%;
+        top: 43%;
         left: 50%;
         transform: translate( -50%, -50% );
         color: white;
@@ -28,6 +27,9 @@
     .attendance-type {
         text-align: center;
         font-size-adjust: inherit;
+    }
+    .attendance {
+        font-size: 150%;
     }
 </style>
 {% endblock css %}
@@ -42,6 +44,7 @@
     <div class="row">
         <!--    left area    -->
         <div class="col-sm-6">
+            {% if userlist %}
             <!--    time check    -->
             {% for item in userlist %}
             <div class="wrapper">
@@ -87,39 +90,39 @@
                             <table class="table table-hover" style="margin-bottom: 1px">
                                 <tr>
                                     <td>
-                                        <div>훈련현황(기준일)</div><br>
+                                        <div>수강현황(기준일)</div><br>
                                         <div class="col-xs-3" style="width: 20%; display: inline-block;">
                                             <img class="img-responsive img-circle" src="https://images.emojiterra.com/google/android-10/512px/26ab.png">
                                             <div class="circle-text">
-                                                <p class="attendance">num</p>
+                                                <p class="attendance">{{ total }}</p>
                                             </div>
                                             <p class="attendance-type">출석</p>
                                         </div>
                                         <div class="col-xs-3" style="width: 20%; display: inline-block;">
                                             <img class="img-responsive img-circle" src="https://images.emojiterra.com/google/android-10/512px/26ab.png">
                                             <div class="circle-text">
-                                                <p class="attendance">num</p>
+                                                <p class="attendance">{{ absent }}</p>
                                             </div>
                                             <p class="attendance-type">결석</p>
                                         </div>
                                         <div class="col-xs-3" style="width: 20%; display: inline-block;">
                                             <img class="img-responsive img-circle" src="https://images.emojiterra.com/google/android-10/512px/26ab.png">
                                             <div class="circle-text">
-                                                <p class="attendance">num</p>
+                                                <p class="attendance">{{ early }}</p>
                                             </div>
                                             <p class="attendance-type">조퇴</p>
                                         </div>
                                         <div class="col-xs-3" style="width: 20%; display: inline-block;">
                                             <img class="img-responsive img-circle" src="https://images.emojiterra.com/google/android-10/512px/26ab.png">
                                             <div class="circle-text">
-                                                <p class="attendance">num</p>
+                                                <p class="attendance">{{ late }}</p>
                                             </div>
                                             <p class="attendance-type">지각</p>
                                         </div>
                                         <div class="col-xs-3" style="width: 20%; display: inline-block;">
                                             <img class="img-responsive img-circle" src="https://images.emojiterra.com/google/android-10/512px/26ab.png">
                                             <div class="circle-text">
-                                                <p class="attendance">num</p>
+                                                <p class="attendance">{{ out }}</p>
                                             </div>
                                             <p class="attendance-type">외출</p>
                                         </div>
@@ -131,6 +134,18 @@
                 </div>
             </div>
             {% endfor %}
+            {% else %}
+            <div class="wrapper panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        No classes found
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <p>현재 수강 중인 수업이 없습니다.</p>
+                </div>
+            </div>
+            {% endif %}
         </div>
         <!--    right area    -->
         <div class="col-sm-6">
