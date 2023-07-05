@@ -131,18 +131,25 @@ def save_attendance(user_id, entering):
     is_entering = entering
     remark = attend_divide(user_id, is_entering, start_time, end_time)
     attendance = Attendance(is_entering=is_entering, remark=remark, user_id=user_id)
-    prev_attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date())).latest('index')
-    if prev_attendance.is_entering == entering:
-        pass
-    else:
-        if prev_attendance.remark == '퇴실':
+    try:
+        prev_attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date())).latest('index')
+        if prev_attendance.is_entering == entering:
             pass
-        elif datetime.now().time() > end_time:
-            if prev_attendance.is_entering == 0:
-                prev_attendance.remark = '조퇴'
-                prev_attendance.save()
+        else:
+            if prev_attendance.remark == '퇴실':
+                pass
+            elif datetime.now().time() > end_time:
+                if prev_attendance.is_entering == 0:
+                    prev_attendance.remark = '조퇴'
+                    prev_attendance.save()
+            else:
+                attendance.save()
+    except Attendance.DoesNotExist:
+        if entering == 0:
+            pass
         else:
             attendance.save()
+
 
 
 def attend_divide(user_id, is_entering, start_time, end_time):
