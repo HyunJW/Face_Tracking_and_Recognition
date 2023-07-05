@@ -1,6 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
-from attendance.models import Attendance, UserList, ClassTime
+from attendance.models import Attendance, UserList, ClassTime, ClassInfo
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import json
@@ -11,6 +11,8 @@ import threading
 from attendance.signals import camera_task_stopped
 from module.FaceDetectModule import FaceDetect
 from module.FaceMatchModule import FaceMatch
+from itertools import groupby
+import math
 
 User = get_user_model()
 
@@ -75,9 +77,13 @@ def home(request):
 
     in_time, out_time = get_inout_time(user)
 
+    total, absent, early, late, out = get_class_days(user.id)
+
     return render(request, 'attendance/home.html', {'userlist': userlist,
                                                     'start_time': start_time, 'end_time': end_time,
-                                                    'in_time': in_time, 'out_time': out_time})
+                                                    'in_time': in_time, 'out_time': out_time,
+                                                    'total': total, 'absent': absent, 'early': early,
+                                                    'late': late, 'out': out})
 
 
 @login_required
@@ -124,7 +130,7 @@ def save_attendance(user_id, entering):
 
     is_entering = entering
     remark = attend_divide(user_id, is_entering, start_time, end_time)
-    attendance = Attendance(is_entering=is_entering, remark=remark, user_id=user)
+    attendance = Attendance(is_entering=is_entering, remark=remark, user_id=user_id)
     prev_attendance = Attendance.objects.filter(Q(user_id=user_id) & Q(date=datetime.today().date()))[-1]
     if prev_attendance.is_entering == entering:
         pass
@@ -183,6 +189,62 @@ def get_inout_time(user):
         out_time = ''
 
     return in_time, out_time
+
+
+def get_class_days(user_id):
+    user_list = UserList.objects.filter(student_id=user_id)
+
+    if not user_list:
+        return 0, 0, 0, 0, 0
+
+    attendance = Attendance.objects.filter(user_id=user_id).order_by('date')
+    remove = Attendance.objects.filter(index=None)
+
+    total_days = 0
+
+    dates = [date for date, _ in groupby(attendance, key=lambda x: x.date)]
+    for date in dates:
+        filtered_attendance = attendance.filter(date=date)
+        filtered_attendance.order_by('index')
+        last_remark = filtered_attendance.order_by('index').last().remark
+        if last_remark != '퇴실' and last_remark != '조퇴':
+            remove = remove.union(filtered_attendance)
+        else:
+            total_days += 1
+    print(remove)
+    attendance = attendance.exclude(index__in=remove.values('index'))
+
+    early = attendance.filter(remark='조퇴').count()
+    late = attendance.filter(remark='지각').count()
+    out = attendance.filter(remark='외출').count()
+    absent = total_class_days(user_list) - total_days
+    total = total_days - early/3 - late/3 - out/3
+
+    return round(total), absent, early, late, out
+
+
+def total_class_days(userlist):
+    class_id = userlist[0].class_id.id
+    classtime = ClassTime.objects.filter(class_id_id=class_id).values()
+
+    # 수업 없는 요일
+    exclude_date = []
+    count = -2 # because of 0: id, 1: class_id_id
+    for key, value in classtime[0].items():
+        if (value is None) & (key.endswith('_start')):
+            exclude_date.append(math.floor(count / 2))
+        count += 1
+
+    start_date = userlist[0].class_id.start_date
+    total = (datetime.today().date() - start_date).days
+
+    total_days = 0
+    for i in range(total):
+        current_date = start_date + timedelta(days=i)
+        if current_date.weekday() not in exclude_date:
+            total_days += 1
+
+    return total_days
 
 
 def user_class(request):
