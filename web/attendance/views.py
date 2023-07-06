@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import json
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Q
+from django.db.models import Q, Max
 import cv2
 import threading
 from attendance.signals import camera_task_stopped
@@ -13,9 +13,17 @@ from module.FaceDetectModule import FaceDetect
 from module.FaceMatchModule import FaceMatch
 from itertools import groupby
 import math
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 User = get_user_model()
 
+def job():
+    update_early(datetime.today().date())
+
+schedule = BackgroundScheduler(daemon=True, timezone='Asia/Seoul')
+schedule.add_job(job, 'cron', hour='20', minute='0')
+schedule.start()
 
 class CameraBackgroundTask(threading.Thread):
     def __init__(self, camera_index):
@@ -138,9 +146,9 @@ def save_attendance(user_id, entering):
         else:
             if prev_attendance.remark == '퇴실':
                 pass
-            elif datetime.now().time() > end_time:
-                if prev_attendance.is_entering == 0:
-                    prev_attendance.update(remark='조퇴')
+            # elif datetime.now().time() > end_time:
+            #     if prev_attendance.is_entering == 0:
+            #         prev_attendance.update(remark='조퇴')
             else:
                 attendance.save()
     except Attendance.DoesNotExist:
@@ -255,3 +263,13 @@ def total_class_days(userlist):
 
 def user_class(request):
     return render(request, 'user/class.html')
+
+
+def update_early(date):
+    subquery = Attendance.objects.filter(date=date).values('user_id').annotate(max_timestamp=Max('timestamp'))
+    attendances = Attendance.objects.filter(user_id__in=subquery.values('user_id'),
+                                            timestamp__in=subquery.values('max_timestamp'))
+    for attendance in attendances:
+        if attendance.remark == '':
+            attendance.remark = '조퇴'
+            attendance.save()
