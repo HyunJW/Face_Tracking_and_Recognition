@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>회원 탈퇴</title>{% endblock title %}
+
+{% block css %}
+<style>
+    .table {
+        width: 500px;
+        margin: 0 auto;
+    }
+    .alert-danger {
+        white-space: nowrap;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="panel panel-default table">
+    <div class="panel-heading">
+        <strong style="font-size: 18px;">
+            <i class="fas fa-user-slash"></i>&nbsp;회원 탈퇴
+        </strong>
+    </div>
+    <div class="panel-body info">
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            <p><strong>{{ user.name }}</strong> 회원님의 계정이 삭제됩니다.<br>탈퇴시 개인정보 및 이용정보가 삭제되며 복구할 수 없습니다. <br>본인의 비밀번호를 입력한 후 하단의 유의사항 동의에 체크하세요.</p>
+            <div>
+                <label name="label_password" for="{{ password_form.password.id_for_label }}">{{ password_form.password.label }}</label>
+                {{ password_form.password }}
+                {% if password_form.password.errors %}
+                <script type="text/javascript">
+            document.getElementsByName('password')[0].setAttribute('class', 'form-control is-invalid')
+        </script>
+                {% for error in password_form.password.errors %}
+                <div class="alert-danger" style="white-space: nowrap; margin-bottom: 10px;">
+                    {{ error }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <small class="form-text text-muted">
+                    본인인증을 위해 비밀번호를 입력해주세요.
+                </small>
+            </div>
+            <label style="margin-top:10px; margin-bottom:10px;">
+                <input type="checkbox" name="ck" onClick="checkDisable(this.form)">
+                <span>유의사항 동의</span>
+            </label>
+            <div style="text-align: center;">
+                <p style="color:gray; margin-bottom: 4px;"><i class="fas fa-exclamation-triangle"></i>&nbsp;{{ user.name }}님 계정의 비밀번호를 변경합니다.</p>
+                <table class="table info">
+                    <tr>
+                        <td>
+                        <button class="btn btn-default btn-block" type="button" onclick="location.href='/user/info/'">
+                            <i class="fas fa-undo"></i> 돌아가기
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-block" type="submit" disabled="true" name="bt">
+                            <i class="fas fa-check"></i> 탈퇴하기
+                        </button>
+                    </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function checkDisable(form) {
+        if (form.ck.checked == true) {
+            form.bt.disabled = false;
+        } else {
+            form.bt.disabled = true;
+        }
+    }
+</script>
+{% endblock content %}
