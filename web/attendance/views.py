@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
-from attendance.models import Attendance, UserList, ClassTime, ClassInfo
+from attendance.models import Attendance, UserList, ClassTime, ClassInfo, AcademyInfo
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import json
@@ -146,9 +146,6 @@ def save_attendance(user_id, entering):
         else:
             if prev_attendance.remark == '퇴실':
                 pass
-            # elif datetime.now().time() > end_time:
-            #     if prev_attendance.is_entering == 0:
-            #         prev_attendance.update(remark='조퇴')
             else:
                 attendance.save()
     except Attendance.DoesNotExist:
@@ -261,10 +258,6 @@ def total_class_days(userlist):
     return total_days
 
 
-def user_class(request):
-    return render(request, 'user/class.html')
-
-
 def update_early(date):
     subquery = Attendance.objects.filter(date=date).values('user_id').annotate(max_timestamp=Max('timestamp'))
     attendances = Attendance.objects.filter(user_id__in=subquery.values('user_id'),
@@ -273,3 +266,16 @@ def update_early(date):
         if attendance.remark == '':
             attendance.remark = '조퇴'
             attendance.save()
+
+
+def user_class(request):
+    user = request.user
+    user_list = UserList.objects.filter(student_id=user.id)
+    class_info = ClassInfo.objects.filter(id=None)
+    academy_info = AcademyInfo.objects.filter(id=None)
+    for i in range(len(user_list)):
+        temp_info = ClassInfo.objects.filter(id=user_list[i].class_id_id)
+        class_info = class_info.union(temp_info)
+        academy_info = academy_info.union(AcademyInfo.objects.filter(id=temp_info[0].academy_id))
+    academy_names = [academy.name if academy else '' for academy in academy_info]
+    return render(request, 'user/class.html', {'class_info': class_info, 'academy_info': academy_info, 'academy_names': academy_names})

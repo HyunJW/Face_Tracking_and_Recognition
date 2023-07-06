@@ -5,6 +5,7 @@ from user.views import (
     user_info,
     user_edit,
     password_update,
+    user_delete,
 )
 from django.contrib.auth.views import LogoutView
 from attendance.views import user_class
@@ -20,6 +21,7 @@ urlpatterns = [
     path('info/', user_info),
     path('info/update/', user_edit),
     path('info/update/password/', password_update),
+    path('delete/', user_delete),
     path('class/', user_class),
 ]
 

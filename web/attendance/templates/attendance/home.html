@@ -61,7 +61,7 @@
             <div class="wrapper panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <strong>수강과목: </strong>{{ item.class_id.name }}
+                        <strong>{{ item.class_id.name }}</strong>
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -173,7 +173,7 @@
 
                 {% if not request.user.is_authenticated %}
                 {% else %}
-                <div id="table1"></div>
+                <div id="table1" class="pre-scrollable"></div>
                 {% endif %}
             </div>
         </div>
