@@ -31,6 +31,7 @@ class ClassInfo(models.Model):
     start_date = models.DateField('시작일')
     end_date = models.DateField('종료일', blank=True, null=True)
     total_days = models.IntegerField('총 수강일')
+    detail = models.CharField('상세내용', max_length=1055, blank=True, null=True)
 
     class Meta:
         db_table = "class_info"
