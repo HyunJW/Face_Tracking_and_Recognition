@@ -61,7 +61,7 @@
             <div class="wrapper panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        {{ item.class_id.name }}
+                        <strong>수강과목: </strong>{{ item.class_id.name }}
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -79,11 +79,11 @@
                             <td>{{ item.class_id.academy.tel }}</td>
                         </tr>
                         <tr>
-                            <td>훈련기간</td>
+                            <td>수강기간</td>
                             <td>{{ item.class_id.start_date }} ~ {{ item.class_id.end_date }}</td>
                         </tr>
                         <tr>
-                            <td>금일훈련</td>
+                            <td>금일수업</td>
                             <td>{{ start_time }} ~ {{ end_time }}</td>
                         </tr>
                         <tr>

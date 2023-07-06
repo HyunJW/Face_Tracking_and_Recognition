@@ -34,7 +34,7 @@ class CameraBackgroundTask(threading.Thread):
         self.camera_index = camera_index
 
     def run(self):
-        cap = cv2.VideoCapture(self.camera_index)  # 웹캠에 접근하기 위해 0을 사용합니다.
+        cap = cv2.VideoCapture(self.camera_index)
         # cap = cv2.VideoCapture('d:/video/enter.mp4') # 동영상 사용
 
         while not self._stop_event.is_set():

@@ -26,13 +26,13 @@ class UserRegistrationView(CreateView):
 
         new_filename = f'{user_id}.{extension}'
         media_root = settings.MEDIA_ROOT
-        media_path = os.path.join(media_root, 'profile_pictures', new_filename)
+        media_path = os.path.join(media_root, new_filename)
 
         with open(media_path, 'wb') as f:
             for chunk in profile_picture.chunks():
                 f.write(chunk)
 
-        if user.profile_picture:
+        if user.profile_picture.name:
             default_storage.delete(user.profile_picture.path)
 
         user.profile_picture.name = f'profile_pictures/{new_filename}'
@@ -65,7 +65,7 @@ def user_edit(request):
                 extension = profile_picture.name.split('.')[-1]
                 new_filename = f'{user_id}.{extension}'
                 media_root = settings.MEDIA_ROOT
-                media_path = os.path.join(media_root, 'profile_pictures', new_filename)
+                media_path = os.path.join(media_root, new_filename)
 
                 with open(media_path, 'wb') as f:
                     for chunk in profile_picture.chunks():

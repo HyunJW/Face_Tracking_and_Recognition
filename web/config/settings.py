@@ -118,7 +118,7 @@ STATIC_URL = "/static/"
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'user', 'static', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'user', 'static', 'media', 'profile_pictures')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'user.User'
@@ -127,7 +127,7 @@ LOGIN_REDIRECT_URL = '/home/'
 
 LOGIN_URL = '/user/login/'
 
-LOGOUT_REDIRECT_URL = '/user/login'
+LOGOUT_REDIRECT_URL = '/user/login/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
