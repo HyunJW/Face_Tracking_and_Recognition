@@ -18,6 +18,12 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 User = get_user_model()
 
+def job():
+    update_early(datetime.today().date())
+
+schedule = BackgroundScheduler(daemon=True, timezone='Asia/Seoul')
+schedule.add_job(job, 'cron', hour='20', minute='0')
+schedule.start()
 
 class CameraBackgroundTask(threading.Thread):
     def __init__(self, camera_index):
@@ -260,15 +266,6 @@ def update_early(date):
         if attendance.remark == '':
             attendance.remark = '조퇴'
             attendance.save()
-
-
-def early_scheduler():
-    update_early(datetime.today().date())
-
-
-schedule = BackgroundScheduler(daemon=True, timezone='Asia/Seoul')
-schedule.add_job(early_scheduler, 'cron', hour='23', minute='59')
-schedule.start()
 
 
 def user_class(request):
