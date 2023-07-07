@@ -23,37 +23,37 @@
 
 #### 데이터베이스
 <div align="left">
-  <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MySQL-005C84?style=flat-square&logo=mysql&logoColor=white"/>
 </div>
 
 #### 프레임워크
 <div align="left">
-  <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green"/>
-  <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white"/>
-  <img src="https://img.shields.io/badge/conda-342B029.svg?&style=for-the-badge&logo=anaconda&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Jupyter-F37626.svg?&style=for-the-badge&logo=Jupyter&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=django&logoColor=green"/>
+  <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=flat-square&logo=bootstrap&logoColor=white"/>
+  <img src="https://img.shields.io/badge/conda-342B029.svg?&style=flat-square&logo=anaconda&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Jupyter-F37626.svg?&style=flat-square&logo=Jupyter&logoColor=white"/>
 </div>
 
 #### 라이브러리
 <div align="left">
-  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Keras-FF0000?style=for-the-badge&logo=keras&logoColor=white"/>
-  <img src="https://img.shields.io/badge/OpenCV-27338e?style=for-the-badge&logo=OpenCV&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Mediapipe?&style=for-the-badge&logo=Mediapipe&logoColor=white"/>
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Keras-FF0000?style=flat-square&logo=keras&logoColor=white"/>
+  <img src="https://img.shields.io/badge/OpenCV-27338e?style=flat-square&logo=OpenCV&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Mediapipe?&style=flat-square&logo=Mediapipe&logoColor=white"/>
 </div>
 <div align="left">
-  <img src="https://img.shields.io/badge/Pandas-2C2D72?style=for-the-badge&logo=pandas&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Numpy-777BB4?style=for-the-badge&logo=numpy&logoColor=white"/>
-  <img src="https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white"/>
-  <img src="https://img.shields.io/badge/pillow?&style=for-the-badge&logo=pillow&logoColor=white"/>
-  <img src="https://img.shields.io/badge/os?&style=for-the-badge&logo=os&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Pandas-2C2D72?style=flat-square&logo=pandas&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Numpy-777BB4?style=flat-square&logo=numpy&logoColor=white"/>
+  <img src="https://img.shields.io/badge/json-5E5C5C?style=flat-square&logo=json&logoColor=white"/>
+  <img src="https://img.shields.io/badge/pillow?&style=flat-square&logo=pillow&logoColor=white"/>
+  <img src="https://img.shields.io/badge/os?&style=flat-square&logo=os&logoColor=white"/>
 </div>
 <div align="left">
-  <img src="https://img.shields.io/badge/itertools?style=for-the-badge&logo=itertools&logoColor=green"/>
-  <img src="https://img.shields.io/badge/math?style=for-the-badge&logo=math&logoColor=white"/>
-  <img src="https://img.shields.io/badge/threading?&style=for-the-badge&logo=threading&logoColor=white"/>
-  <img src="https://img.shields.io/badge/apscheduler?&style=for-the-badge&logo=apscheduler&logoColor=white"/>
-  <img src="https://img.shields.io/badge/datetime?&style=for-the-badge&logo=datetime&logoColor=white"/>
+  <img src="https://img.shields.io/badge/itertools?style=flat-square&logo=itertools&logoColor=green"/>
+  <img src="https://img.shields.io/badge/math?style=flat-square&logo=math&logoColor=white"/>
+  <img src="https://img.shields.io/badge/threading?&style=flat-square&logo=threading&logoColor=white"/>
+  <img src="https://img.shields.io/badge/apscheduler?&style=flat-square&logo=apscheduler&logoColor=white"/>
+  <img src="https://img.shields.io/badge/datetime?&style=flat-square&logo=datetime&logoColor=white"/>
 </div>
 
 ## 순서
