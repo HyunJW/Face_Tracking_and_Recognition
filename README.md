@@ -1,8 +1,4 @@
-# Face_Tracking_and_Recognition
-
-### 안면인식 및 안면매칭 영상처리 프로젝트
-
-<hr>
+# Face_Tracking_and_Recognition | 안면인식 영상처리 프로젝트
 
 ### 수행 기간 : 2023.06.12 - 2023.07.10
 
@@ -38,22 +34,22 @@
 <div align="left">
   <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white"/>
   <img src="https://img.shields.io/badge/Keras-FF0000?style=flat-square&logo=keras&logoColor=white"/>
-  <img src="https://img.shields.io/badge/OpenCV-27338e?style=flat-square&logo=OpenCV&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Mediapipe?&style=flat-square&logo=Mediapipe&logoColor=white"/>
+  <img src="https://img.shields.io/badge/OpenCV-27338E?style=flat-square&logo=OpenCV&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Mediapipe-2596BE?&style=flat-square&logo=Mediapipe&logoColor=white"/>
 </div>
 <div align="left">
   <img src="https://img.shields.io/badge/Pandas-2C2D72?style=flat-square&logo=pandas&logoColor=white"/>
   <img src="https://img.shields.io/badge/Numpy-777BB4?style=flat-square&logo=numpy&logoColor=white"/>
   <img src="https://img.shields.io/badge/json-5E5C5C?style=flat-square&logo=json&logoColor=white"/>
-  <img src="https://img.shields.io/badge/pillow?&style=flat-square&logo=pillow&logoColor=white"/>
-  <img src="https://img.shields.io/badge/os?&style=flat-square&logo=os&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Pillow-F2F2F2?&style=flat-square&logo=pillow&logoColor=white"/>
+  <img src="https://img.shields.io/badge/OS-F2F2F2?&style=flat-square&logo=os&logoColor=white"/>
 </div>
 <div align="left">
-  <img src="https://img.shields.io/badge/itertools?style=flat-square&logo=itertools&logoColor=green"/>
-  <img src="https://img.shields.io/badge/math?style=flat-square&logo=math&logoColor=white"/>
-  <img src="https://img.shields.io/badge/threading?&style=flat-square&logo=threading&logoColor=white"/>
-  <img src="https://img.shields.io/badge/apscheduler?&style=flat-square&logo=apscheduler&logoColor=white"/>
-  <img src="https://img.shields.io/badge/datetime?&style=flat-square&logo=datetime&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Itertools-F2F2F2?style=flat-square&logo=itertools&logoColor=green"/>
+  <img src="https://img.shields.io/badge/Math-F2F2F2?style=flat-square&logo=math&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Threading-F2F2F2?&style=flat-square&logo=threading&logoColor=white"/>
+  <img src="https://img.shields.io/badge/APScheduler-F2F2F2?&style=flat-square&logo=apscheduler&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Datetime-F2F2F2?&style=flat-square&logo=datetime&logoColor=white"/>
 </div>
 
 ## 순서
