@@ -1,16 +1,60 @@
 # Face_Tracking_and_Recognition
 
+### 안면인식 및 안면매칭 영상처리 프로젝트
+
+<hr>
+
 ### 수행 기간 : 2023.06.12 - 2023.07.10
+
+## 주제
+ - 학원의 출석과 퇴실 시간에 카드 태깅 혹은 어플을 이용한 출결 체크로 인한 혼잡한 상황을 예방하기 위해 안면 인식을 통한 출석 관리 서비스 구축
 
 ## 데이터 출처
 - AI Hub: 마스크 착용 한국인 안면 이미지 데이터 (https://aihub.or.kr/aihubdata/data/view.do?currMenu=&topMenu=&aihubDataSe=realm&dataSetSn=469)
 
 ## 사용한 언어 및 라이브러리, 프레임워크
-- Python
-  - torch, torchvision, PIL, pandas, os, numpy, cv2, module, mediapipe
-- HTML, JS
-- MySQL
-- Django
+#### 언어
+<div align="left">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white"/>
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white"/>
+  <img src="https://img.shields.io/badge/JavaScript-323330?style=flat-square&logo=javascript&logoColor=F7DF1E"/> 
+</div>
+
+#### 데이터베이스
+<div align="left">
+  <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white"/>
+</div>
+
+#### 프레임워크
+<div align="left">
+  <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green"/>
+  <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white"/>
+  <img src="https://img.shields.io/badge/conda-342B029.svg?&style=for-the-badge&logo=anaconda&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Jupyter-F37626.svg?&style=for-the-badge&logo=Jupyter&logoColor=white"/>
+</div>
+
+#### 라이브러리
+<div align="left">
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Keras-FF0000?style=for-the-badge&logo=keras&logoColor=white"/>
+  <img src="https://img.shields.io/badge/OpenCV-27338e?style=for-the-badge&logo=OpenCV&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Mediapipe?&style=for-the-badge&logo=Mediapipe&logoColor=white"/>
+</div>
+<div align="left">
+  <img src="https://img.shields.io/badge/Pandas-2C2D72?style=for-the-badge&logo=pandas&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Numpy-777BB4?style=for-the-badge&logo=numpy&logoColor=white"/>
+  <img src="https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white"/>
+  <img src="https://img.shields.io/badge/pillow?&style=for-the-badge&logo=pillow&logoColor=white"/>
+  <img src="https://img.shields.io/badge/os?&style=for-the-badge&logo=os&logoColor=white"/>
+</div>
+<div align="left">
+  <img src="https://img.shields.io/badge/itertools?style=for-the-badge&logo=itertools&logoColor=green"/>
+  <img src="https://img.shields.io/badge/math?style=for-the-badge&logo=math&logoColor=white"/>
+  <img src="https://img.shields.io/badge/threading?&style=for-the-badge&logo=threading&logoColor=white"/>
+  <img src="https://img.shields.io/badge/apscheduler?&style=for-the-badge&logo=apscheduler&logoColor=white"/>
+  <img src="https://img.shields.io/badge/datetime?&style=for-the-badge&logo=datetime&logoColor=white"/>
+</div>
 
 ## 순서
 #### 1. 모델 학습용 데이터 수집 및 처리
@@ -23,14 +67,18 @@
 
 #### 3. 얼굴 매칭 모델 학습 및 구축
   - SiameseNetwork 모델 채택
+  - Triplet Loss 및 Contrastive Loss 채택
 
-#### 4. DB생성
-  - 회원 정보 DB
-  - 전체 출결 DB
-  - 학원 정보 DB
-  - 수업 정보 DB 
+#### 4. 데이터베이스 구축
+  - 회원 정보 테이블
+  - 전체 출결 테이블
+  - 학원 정보 테이블
+  - 수업 정보 테이블
+  - 수업 시간표 테이블
+  - 수강 목록 테이블
 
 #### 5. Django를 이용한 서비스 구현
+  - 회원 관리 기능 추가
   - 회원 정보와 학원, 수업 정보 연결
   - 회원 정보와 특정 날짜의 출결 정보 연결
 
