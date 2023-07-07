@@ -1,4 +1,4 @@
-# Face_Tracking_and_Recognition | 안면인식 영상처리 프로젝트
+# 안면 인식을 통한 출석 관리 프로젝트
 
 ### 수행 기간 : 2023.06.12 - 2023.07.10
 
@@ -56,18 +56,28 @@
 #### 1. 모델 학습용 데이터 수집 및 처리
   - 악세사리(모자, 마스크 등)를 착용하지 않은 컬러 데이터만 사용
   - 정면사진 1장 + 다각도 스튜디오 사진 8장 사용
-<img src="" alt="(사진 예시) "/>
+<img src="" alt="사진 예시 "/>
 
 #### 2. 얼굴 인식 모델을 이용한 이미지 전처리
   - 영상에서 안면만 추출
   - 배경 제거
-<img src="" alt="(사진 예시)"/>
+<div align="left">
+ <img src="" alt="원본 사진"/> =>
+ <img src="" alt="안면 추출"/> =>
+ <img src="" alt="배경 제거"/>
+</div>
 
 #### 3. 얼굴 매칭 모델 학습 및 구축
   - SiameseNetwork 모델 채택
   - Triplet Loss 및 Contrastive Loss 채택
-<img src="" alt="(모델 및 loss)"/>
 
+| `모델(Keras)` | `모델(PyTorch)` |
+| --- | --- |
+| [![모델(Keras)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/57aa1e8a-c3a1-4d4c-8472-53cfe456b1f6)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/57aa1e8a-c3a1-4d4c-8472-53cfe456b1f6)[![모델(Keras)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/920de9d9-6259-41b6-bf4f-c4f6d86d6099)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/920de9d9-6259-41b6-bf4f-c4f6d86d6099) | [![모델(PyTorch)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/aa220837-00d3-42b8-bdb5-e0a2c32aa9b7)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/aa220837-00d3-42b8-bdb5-e0a2c32aa9b7)[![모델(PyTorch)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/f9952051-9cab-452c-bcdd-124d2afc280f)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/f9952051-9cab-452c-bcdd-124d2afc280f) |
+
+| `Triplet Loss` | `Contrastive Loss` |
+| --- | --- |
+| [![Triplet Loss](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/cb97675e-1443-4de6-9b56-0f45debafb85)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/cb97675e-1443-4de6-9b56-0f45debafb85) | [![Contrastive Loss](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/b211fbfb-6d9a-4901-8c6d-5e4d8adf1be5)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/b211fbfb-6d9a-4901-8c6d-5e4d8adf1be5) |
 #### 4. 데이터베이스 구축
   - 회원 정보 테이블
   - 전체 출결 테이블
@@ -75,16 +85,21 @@
   - 수업 정보 테이블
   - 수업 시간표 테이블
   - 수강 목록 테이블
-<img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/977a3379-e2e6-43d8-acfe-2223abf24c3d" alt="(스키마)"/>
+<img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/977a3379-e2e6-43d8-acfe-2223abf24c3d" alt="DB 스키마"/>
 
 #### 5. Django를 이용한 서비스 구현
   - 회원 관리 기능 추가
-<img src="" alt="(예시)"/>
+<img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/2a3d705d-f8d7-4d8c-9cde-0b8d32ad27d0" alt="회원 정보 확인 및 수정"/>
   - 회원 정보와 학원, 수업 정보 연결
   - 회원 정보와 특정 날짜의 출결 정보 연결
-<img src="" alt="(예시)"/>
+<img src="" alt="날짜별 출결 확인"/>
+  - 관리자 페이지
+<img src="" alt="관리자 페이지"/>
 
 ## 개선사항
 - 회원 정보에 입력된 사진과 CCTV 상의 사진의 매칭 정확도 개선
 - CCTV 에 인식되는 시간과 순서에 따라 자동으로 출결 외에 외출, 조퇴, 지각등 여러가지 사유 추가 필요
 - 악세사리(모자, 마스크 등) 착용 여부와 상관없이 인식 가능한 모델 구축 필요
+- 웹페이지를 더욱 사용자 친화적으로 개선
+
+##### 더 자세한 사항 : [발표자료 링크](https://docs.google.com/presentation/d/1Jr2MkSKmYNR93EilXSLqJTRU0fOsFJbtMqBSpp4Edsk/edit?usp=sharing)
