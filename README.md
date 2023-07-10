@@ -56,15 +56,15 @@
 #### 1. 모델 학습용 데이터 수집 및 처리
   - 악세사리(모자, 마스크 등)를 착용하지 않은 컬러 데이터만 사용
   - 정면사진 1장 + 다각도 스튜디오 사진 8장 사용
-<img src="" alt="사진 예시 "/>
+<img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409518/c43786ef-362a-4dd1-85cd-08b8abfdd3c7" alt="사진 예시 "/>
 
 #### 2. 얼굴 인식 모델을 이용한 이미지 전처리
   - 영상에서 안면만 추출
   - 배경 제거
 <div align="left">
- <img src="![boy](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409518/916e0e5a-ede4-4a39-bf60-b0f9c20cb020)" alt="원본 사진"/> =>
- <img src="" alt="안면 추출"/> =>
- <img src="" alt="배경 제거"/>
+ <img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409518/6c816e06-9fde-4603-a03c-72c9f4d303c4" alt="원본 사진" style="width: 20%"/> =>
+ <img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409518/2d84ad8a-a500-4c90-965f-3dc76da21273" alt="안면 추출" style="width: 20%"/> =>
+ <img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409518/5ca4214e-cde7-4271-9e02-c17b500f5ab9" alt="배경 제거" style="width: 20%"/>
 </div>
 
 #### 3. 얼굴 매칭 모델 학습 및 구축
