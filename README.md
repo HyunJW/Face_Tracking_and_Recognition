@@ -62,7 +62,7 @@
   - 영상에서 안면만 추출
   - 배경 제거
 <div align="left">
- <img src="" alt="원본 사진"/> =>
+ <img src="![boy](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409518/916e0e5a-ede4-4a39-bf60-b0f9c20cb020)" alt="원본 사진"/> =>
  <img src="" alt="안면 추출"/> =>
  <img src="" alt="배경 제거"/>
 </div>
