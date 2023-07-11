@@ -92,9 +92,9 @@
 <img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/2a3d705d-f8d7-4d8c-9cde-0b8d32ad27d0" alt="회원 정보 확인 및 수정"/>
   - 회원 정보와 학원, 수업 정보 연결
   - 회원 정보와 특정 날짜의 출결 정보 연결
-<img src="" alt="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409579/5fe1fd40-5328-4fbf-8a75-bc61642f79a5"/>
+<img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409579/5fe1fd40-5328-4fbf-8a75-bc61642f79a5" alt="특정 날짜 출결 정보"/>
   - 관리자 페이지
-<img src="" alt="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409579/b10a2d37-8e40-4db9-b535-55d4e452b3c1"/>
+<img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409579/b10a2d37-8e40-4db9-b535-55d4e452b3c1" alt="관리자 페이지"/>
 
 ## 개선사항
 - 회원 정보에 입력된 사진과 CCTV 상의 사진의 매칭 정확도 개선
