@@ -90,9 +90,10 @@
 #### 5. Django를 이용한 서비스 구현
   - 회원 관리 기능 추가
 <img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/2a3d705d-f8d7-4d8c-9cde-0b8d32ad27d0" alt="회원 정보 확인 및 수정"/>
-  - 회원 정보와 학원, 수업 정보 연결
+
   - 회원 정보와 특정 날짜의 출결 정보 연결
 <img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409579/a034aad1-4c4c-4f10-a8a0-110ab13d4367" alt="특정 날짜 출결 정보"/>
+
   - 관리자 페이지
 <img src="https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409579/0fa6726d-041d-433c-9b91-a594a5062d37" alt="관리자 페이지"/>
 
