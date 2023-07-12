@@ -3,10 +3,10 @@
 ### 수행 기간 : 2023.06.12 - 2023.07.10
 
 ## 주제
- - 학원의 출석과 퇴실 시간에 카드 태깅 혹은 어플을 이용한 출결 체크로 인한 혼잡한 상황을 예방하기 위해 안면 인식을 통한 출석 관리 서비스 구축
+학원의 출석과 퇴실 시간에 카드 태깅 혹은 어플을 이용한 출결 체크로 인한 혼잡한 상황을 예방하기 위해 안면 인식을 통한 출석 관리 서비스 구축
 
 ## 데이터 출처
-- AI Hub: 마스크 착용 한국인 안면 이미지 데이터 (https://aihub.or.kr/aihubdata/data/view.do?currMenu=&topMenu=&aihubDataSe=realm&dataSetSn=469)
+AI Hub: 마스크 착용 한국인 안면 이미지 데이터 (https://aihub.or.kr/aihubdata/data/view.do?currMenu=&topMenu=&aihubDataSe=realm&dataSetSn=469)
 
 ## 사용한 언어 및 라이브러리, 프레임워크
 #### 언어
