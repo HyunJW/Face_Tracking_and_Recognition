@@ -69,15 +69,15 @@ AI Hub: 마스크 착용 한국인 안면 이미지 데이터 (https://aihub.or.
 
 #### 3. 얼굴 매칭 모델 학습 및 구축
   - SiameseNetwork 모델 채택
-  - Triplet Loss 및 Contrastive Loss 채택
+  - Contrastive Loss 채택
 
 | `모델(Keras)` | `모델(PyTorch)` |
 | --- | --- |
 | [![모델(Keras)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/57aa1e8a-c3a1-4d4c-8472-53cfe456b1f6)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/57aa1e8a-c3a1-4d4c-8472-53cfe456b1f6)[![모델(Keras)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/920de9d9-6259-41b6-bf4f-c4f6d86d6099)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/920de9d9-6259-41b6-bf4f-c4f6d86d6099) | [![모델(PyTorch)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/aa220837-00d3-42b8-bdb5-e0a2c32aa9b7)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/aa220837-00d3-42b8-bdb5-e0a2c32aa9b7)[![모델(PyTorch)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/f9952051-9cab-452c-bcdd-124d2afc280f)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/f9952051-9cab-452c-bcdd-124d2afc280f) |
 
-| `Triplet Loss` | `Contrastive Loss` |
-| --- | --- |
-| [![Triplet Loss](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/cb97675e-1443-4de6-9b56-0f45debafb85)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/cb97675e-1443-4de6-9b56-0f45debafb85) | [![Contrastive Loss](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/b211fbfb-6d9a-4901-8c6d-5e4d8adf1be5)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/b211fbfb-6d9a-4901-8c6d-5e4d8adf1be5) |
+| `Contrastive Loss` |
+| --- |
+| [![Contrastive Loss](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/b211fbfb-6d9a-4901-8c6d-5e4d8adf1be5)](https://github.com/HyunJW/Face_Tracking_and_Recognition/assets/121409511/b211fbfb-6d9a-4901-8c6d-5e4d8adf1be5) |
 #### 4. 데이터베이스 구축
   - 회원 정보 테이블
   - 전체 출결 테이블
